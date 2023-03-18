@@ -1,0 +1,13 @@
+/.gitattributes export-ignore
+/.gitignore     export-ignore
+/.github        export-ignore
+/phpunit.xml    export-ignore
+/tests          export-ignore
+/build          export-ignore
+/runtime        export-ignore
+/public         export-ignore
+/.phplint.yml   export-ignore
+/phpstan.neon   export-ignore
+/.env           export-ignore
+/.env.dist      export-ignore
+/clover.xml     export-ignore

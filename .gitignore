@@ -1,0 +1,9 @@
+/.idea/
+/vendor/
+/build/
+clover.xml
+/.env
+/public
+!/public/.gitkeep
+/runtime
+!/runtime/logs/.gitkeep

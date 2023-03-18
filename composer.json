@@ -1,0 +1,76 @@
+{
+  "name": "olifanton/demo-wallet",
+  "homepage": "https://github.com/olifanton/demo-wallet",
+  "description": "A demo wallet application running on PHP with Olifanton library",
+  "type": "project",
+  "license": "MIT",
+  "keywords": [
+    "ton",
+    "blockchain",
+    "the open network",
+    "olifanton",
+    "wallet"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Olifanton\\DemoWallet\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Olifanton\\DemoWallet\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Roman Zaycev",
+      "email": "box@romanzaycev.ru",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.2",
+    "ext-hash": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openswoole": "*",
+    "ext-sodium": "*",
+    "monolog/monolog": "^3.3",
+    "nyholm/psr7": "^1.5",
+    "olifanton/ton": "dev-main",
+    "openswoole/core": "^22.1.0",
+    "openswoole/ide-helper": "^22.0",
+    "php-di/php-di": "^7.0",
+    "vlucas/phpdotenv": "^5.5"
+  },
+  "require-dev": {
+    "jetbrains/phpstorm-attributes": "^1.0",
+    "mockery/mockery": "^1.5",
+    "overtrue/phplint": "^9.0",
+    "phpstan/phpstan": "^1.10",
+    "phpunit/phpunit": "^10.0"
+  },
+  "scripts": {
+    "phplint": "phplint -c .phplint.yml",
+    "phpstan": "phpstan analyse -c phpstan.neon --ansi --xdebug",
+    "start": "XDEBUG_MODE=off php bin/server.php"
+  },
+  "repositories": [
+    {
+      "url": "https://github.com/olifanton/ton.git",
+      "type": "github"
+    }
+  ],
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "platform": {
+      "php": "8.2"
+    },
+    "allow-plugins": {
+      "php-http/discovery": false
+    }
+  }
+}
