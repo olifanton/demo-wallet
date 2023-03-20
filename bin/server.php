@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
-use Olifanton\DemoWallet\Http\Server\SwooleServerFactory;
+use Olifanton\DemoWallet\Http\Server\OpenSwoole\ServerFactory;
+use Psr\Http\Message\ServerRequestInterface;
+use Slim\Factory\AppFactory;
 
 date_default_timezone_set("UTC");
-
 
 define("ROOT_DIR", dirname(__DIR__));
 
@@ -16,15 +17,22 @@ require_once ROOT_DIR . "/vendor/autoload.php";
 $dotenv = Dotenv::createImmutable(ROOT_DIR);
 $dotenv->load();
 
+$diConfigurator = require ROOT_DIR . "/config/di.php";
+$appConfigurator = require ROOT_DIR . "/config/slim.php";
+
 $containerBuilder = new ContainerBuilder();
-$di = require ROOT_DIR . "/config/di.php";
-$di($containerBuilder);
+$diConfigurator($containerBuilder);
 $container = $containerBuilder->build();
 
-$serverFactory = $container->get(SwooleServerFactory::class);
+AppFactory::setContainer($container);
+$app = AppFactory::create();
+$appConfigurator($app);
 
-$server = $serverFactory->createServer(static function () {
-    // FIXME
+$serverFactory = $container->get(ServerFactory::class);
+
+$server = $serverFactory->createServer();
+\OpenSwoole\Core\Helper::handle($server, function (ServerRequestInterface $request) use ($app) {
+    return $app->handle($request);
 });
 
 $server->start();

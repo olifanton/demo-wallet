@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Olifanton\DemoWallet\Http\Server;
+namespace Olifanton\DemoWallet\Http\Server\OpenSwoole;
 
 use OpenSwoole\Http\Server;
 use Psr\Log\LoggerInterface;
@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class SwooleServerFactory
+class ServerFactory
 {
     private const DEFAULT_OPTIONS = [
         'host' => '127.0.0.1',
@@ -53,7 +53,7 @@ class SwooleServerFactory
         $this->options = array_replace_recursive(self::DEFAULT_OPTIONS, $options);
     }
 
-    public function createServer(callable $requestHandler): Server
+    public function createServer(): Server
     {
         $server = new Server(
             $this->options['host'],
@@ -62,7 +62,6 @@ class SwooleServerFactory
             (int)$this->options['sock_type']
         );
         $server->set($this->options['settings']);
-        $server->on('request', $requestHandler);
 
         if ($this->logger) {
             $server->on("start", function (Server $server) {

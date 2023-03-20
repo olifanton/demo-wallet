@@ -39,10 +39,12 @@
     "ext-sodium": "*",
     "monolog/monolog": "^3.3",
     "nyholm/psr7": "^1.5",
+    "nyholm/psr7-server": "^1.0",
     "olifanton/ton": "dev-main",
-    "openswoole/core": "^22.1.0",
+    "openswoole/core": "dev-master",
     "openswoole/ide-helper": "^22.0",
     "php-di/php-di": "^7.0",
+    "slim/slim": "^4.11",
     "vlucas/phpdotenv": "^5.5"
   },
   "require-dev": {
