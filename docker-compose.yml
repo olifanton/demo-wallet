@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/backend.Dockerfile
+    ports:
+      - "${HTTP_LISTEN_PORT}:${HTTP_LISTEN_PORT}"
+    volumes:
+      - ./bin:${BKND_DIR}/bin
+      - ./config:${BKND_DIR}/config
+      - ./public:${BKND_DIR}/public
+      - ./runtime:${BKND_DIR}/runtime
+      - ./src:${BKND_DIR}/src
+      - ./vendor:${BKND_DIR}/vendor
+      - ./.env:${BKND_DIR}/.env
+    restart: on-failure
+    command: php ${BKND_DIR}/bin/server.php
+
+

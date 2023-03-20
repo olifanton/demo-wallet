@@ -57,7 +57,11 @@
   "scripts": {
     "phplint": "phplint -c .phplint.yml",
     "phpstan": "phpstan analyse -c phpstan.neon --ansi --xdebug",
-    "start": "XDEBUG_MODE=off php bin/server.php"
+    "start": "XDEBUG_MODE=off php bin/server.php",
+    "checks": [
+      "@phplint",
+      "@phpstan"
+    ]
   },
   "repositories": [
     {
