@@ -1,0 +1,21 @@
+{
+  "name": "olifanton-demo-wallet",
+  "description": "A demo wallet application running on PHP with Olifanton library",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "node build.js"
+  },
+  "author": "Roman Zaycev <box@romanzaycev.ru>",
+  "license": "MIT",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "esbuild": "0.17.12",
+    "esbuild-plugin-vue3": "^0.3.2"
+  },
+  "dependencies": {
+    "vue": "^3.2.47"
+  }
+}

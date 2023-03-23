@@ -19,6 +19,9 @@ class HttpErrorHandler extends ErrorHandler
             [
                 "exception" => $exception,
                 "code" => $exception->getCode(),
+                "uri" => ($exception instanceof HttpException)
+                    ? (string)$exception->getRequest()->getUri()
+                    : null,
             ],
         );
 

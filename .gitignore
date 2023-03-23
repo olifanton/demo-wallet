@@ -7,3 +7,4 @@ clover.xml
 !/public/.gitkeep
 /runtime
 !/runtime/logs/.gitkeep
+/node_modules/

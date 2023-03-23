@@ -16,6 +16,5 @@ services:
       - ./vendor:${BKND_DIR}/vendor
       - ./.env:${BKND_DIR}/.env
     restart: on-failure
-    command: php ${BKND_DIR}/bin/server.php
-
-
+    command:
+      - ${BKND_DIR}/bin/server.php
