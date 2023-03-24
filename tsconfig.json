@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "ui/src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "ui/src/**/*.ts",
+    "ui/src/**/*.tsx",
+    "ui/src/**/*.vue",
+    "ui/tests/**/*.ts",
+    "ui/tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+}
