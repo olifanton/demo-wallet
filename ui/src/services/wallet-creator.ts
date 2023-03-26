@@ -17,7 +17,26 @@ export class WalletCreator {
                     return response.data.map((word) => word);
                 }
 
-                return Promise.reject(new Error(response.message ?? "Wallet generation error"));
+                return Promise.reject(new Error(response.message ?? "Phrase generation error"));
+            });
+    }
+
+    async saveWallet(words: string[]): Promise<boolean>
+    {
+        return this
+            .api
+            .fetch<ApiResponse>(
+                'wallet/save-wallet',
+                {
+                    method: HttpMethod.POST,
+                    data: words,
+                })
+            .then((response: ApiResponse & any) => {
+                if (response.isSuccess) {
+                    return true;
+                }
+
+                return Promise.reject(new Error(response.message ?? "Wallet saving error"));
             });
     }
 }

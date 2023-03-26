@@ -9,6 +9,37 @@
                 v-show="isLoading"
             ></div>
 
+            <div class="wlt-create-wallet-screen-stages" v-show="isLoading">
+                <div
+                    v-for="(stage, key) in stages"
+                    :key="key"
+                    class="wlt-create-wallet-screen-stages__stage"
+                    :class="{ '_text-muted': stage.value === StageStatus.NONE }"
+                >
+                    <vs-icon
+                        icon="radio_button_unchecked"
+                        icon-pack="material-icons"
+                        size="1rem"
+                        v-show="stage.value === StageStatus.NONE"
+                    ></vs-icon>
+                    <vs-icon
+                        class="_anim-spin"
+                        icon="sync"
+                        icon-pack="material-icons"
+                        size="1rem"
+                        v-show="stage.value === StageStatus.IN_PROGRESS"
+                    ></vs-icon>
+                    <vs-icon
+                        icon="task_alt"
+                        icon-pack="material-icons"
+                        size="1rem"
+                        v-show="stage.value === StageStatus.DONE"
+                    ></vs-icon>
+
+                    {{ stage.title }}
+                </div>
+            </div>
+
             <ol class="wlt-create-wallet-screen-words" v-if="!isLoading && words">
                 <li v-for="(word, key) in words" :key="key">{{ word }}</li>
             </ol>
@@ -46,6 +77,20 @@
         }
     }
 
+    &-stages {
+        margin: var(--v-padding) 0;
+        font-size: 0.9rem;
+
+        &__stage {
+            display: flex;
+            align-items: center;
+
+            .vs-icon {
+                margin-right: 4px;
+            }
+        }
+    }
+
     &-words {
         column-count: 4;
         column-gap: 20px;
@@ -65,7 +110,7 @@
 import {defineComponent} from "vue";
 import WltPage from "@/components/layout/WltPage.vue";
 import WltScreenTitle from "@/components/ui/WltScreenTitle.vue";
-import {useWalletCreatorStore} from "@/stores/wallet-creator-store";
+import {Stage, StageStatus, useWalletCreatorStore} from "@/stores/wallet-creator-store";
 import {useNotificationStore} from "@/stores/notification-store";
 
 export default defineComponent({
@@ -75,12 +120,18 @@ export default defineComponent({
         WltPage,
     },
     computed: {
+        StageStatus() {
+            return StageStatus
+        },
         isLoading() {
             return useWalletCreatorStore().isLoading;
         },
         words() {
             return useWalletCreatorStore().words;
-        }
+        },
+        stages(): Stage[] {
+            return Object.values(useWalletCreatorStore().stages);
+        },
     },
     mounted() {
         this.$vs.loading({
@@ -92,7 +143,7 @@ export default defineComponent({
     },
     methods: {
         startGenerating() {
-            useWalletCreatorStore().generateWords();
+            useWalletCreatorStore().generateNewWallet();
         },
         copyWords() {
             navigator

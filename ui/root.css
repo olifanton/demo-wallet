@@ -29,10 +29,25 @@ body {
     background: #ecf0f1;
 }
 
+._text-muted {
+    color: rgb(var(--vs-muted));
+}
+
 .vs-button {
     border-radius: var(--border-radius);
 }
 
 .vs-icon-muted {
     color: rgb(var(--vs-muted));
+}
+
+._anim-spin {
+    position: relative;
+    animation: animation-spin 2s linear infinite;
+}
+
+@keyframes animation-spin {
+    100% {
+        transform:rotate(360deg);
+    }
 }

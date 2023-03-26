@@ -5,11 +5,11 @@ export class MockApi extends Api {
     fetch<T extends ApiResponse | ArrayBuffer>(endpoint: string, options: FetchOptions = {}): Promise<T> {
         endpoint = this.normalizeEndpoint(endpoint);
 
-        return delay(500)
+        return delay(700)
             // @ts-ignore
             .then(() => {
                 switch (endpoint) {
-                    case '/state':
+                    case "/state":
                         return {
                             isSuccess: true,
                             data: {
@@ -17,7 +17,7 @@ export class MockApi extends Api {
                             }
                         };
 
-                    case '/wallet/generate-words':
+                    case "/wallet/generate-words":
                         return {
                             isSuccess: true,
                             data: [
@@ -30,6 +30,11 @@ export class MockApi extends Api {
                                 'jar',    'anxiety', 'click',
                                 'salon',  'canoe',   'lion',
                             ],
+                        };
+
+                    case "/wallet/save-wallet":
+                        return {
+                            isSuccess: true,
                         };
 
                     default:
