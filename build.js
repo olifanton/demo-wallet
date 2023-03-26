@@ -45,8 +45,6 @@ const options = commandLineArgs([
         },
     });
 
-    console.log(options);
-
     if (options.watch) {
         console.log('Watching...');
 

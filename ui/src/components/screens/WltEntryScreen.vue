@@ -21,7 +21,9 @@
                                 Start using
                             </vs-divider>
 
-                            <vs-button>
+                            <vs-button
+                                to="/create-wallet"
+                            >
                                 Create new wallet
                             </vs-button>
 
@@ -43,7 +45,8 @@
                 <vs-row vs-justify="center">
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="8" vs-sm="12">
                         <vs-alert color="warning" title="Attention!" icon="warning">
-                            This wallet is a test and is unsafe. It has been designed to showcase the capabilities of the Olifanton library and debug its public API.
+                            This wallet is a test and is unsafe. It has been designed to showcase the capabilities of
+                            the Olifanton library and debug its public API.
                             Please refrain from using the wallet in a production environment.
                         </vs-alert>
                     </vs-col>
@@ -87,6 +90,7 @@
         &__warn-tooltip {
             display: inline-block;
             vertical-align: middle;
+            margin-left: 3px;
         }
     }
 }

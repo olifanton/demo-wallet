@@ -1,5 +1,5 @@
 import {inject, injectable} from "tsyringe";
-import {Api, ApiResponse, HttpMethod} from "@/services/api";
+import {Api, ApiResponse} from "@/services/api";
 
 interface CurrentAppState {
     isInitialized: boolean,
@@ -16,9 +16,8 @@ export class AppState {
         return this
             .api
             .fetch<ApiResponse>('state')
-            .then(resp => {
+            .then((resp: any) => {
                 if (resp.isSuccess) {
-                    // @ts-ignore
                     return resp.data.is_initialized ?? false;
                 }
 

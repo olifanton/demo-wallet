@@ -5,7 +5,7 @@ export class MockApi extends Api {
     fetch<T extends ApiResponse | ArrayBuffer>(endpoint: string, options: FetchOptions = {}): Promise<T> {
         endpoint = this.normalizeEndpoint(endpoint);
 
-        return delay(300)
+        return delay(500)
             // @ts-ignore
             .then(() => {
                 switch (endpoint) {
@@ -13,8 +13,23 @@ export class MockApi extends Api {
                         return {
                             isSuccess: true,
                             data: {
-                                is_initialized: true,
+                                is_initialized: false,
                             }
+                        };
+
+                    case '/wallet/generate-words':
+                        return {
+                            isSuccess: true,
+                            data: [
+                                'bring',  'like',    'escape',
+                                'health', 'chimney', 'pear',
+                                'whale',  'peasant', 'drum',
+                                'beach',  'mass',    'garden',
+                                'riot',   'alien',   'possible',
+                                'bus',    'shove',   'unable',
+                                'jar',    'anxiety', 'click',
+                                'salon',  'canoe',   'lion',
+                            ],
                         };
 
                     default:

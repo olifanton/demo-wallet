@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "material-icons": "^1.13.3",
+    "pinia": "^2.0.33",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0",
     "vue": "^3.2.47",

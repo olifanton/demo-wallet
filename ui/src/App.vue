@@ -1,5 +1,6 @@
 <template>
     <router-view></router-view>
+    <wlt-notifications></wlt-notifications>
 </template>
 
 <style lang="scss">
@@ -8,25 +9,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {container} from "tsyringe";
 import WltPage from "@/components/layout/WltPage.vue";
 import WltEntryScreen from "@/components/screens/WltEntryScreen.vue";
-import {AppState} from "@/services/app-state";
+import WltNotifications from "@/components/ui/WltNotifications.vue";
 
 export default defineComponent({
     components: {
+        WltNotifications,
         WltEntryScreen,
         WltPage,
-    },
-    data() {
-        return {
-            count: 0
-        }
-    },
-    created() {
-        const as: AppState = container.resolve(AppState);
-
-        as.getState().then(r => console.log(r));
     }
 });
 </script>
