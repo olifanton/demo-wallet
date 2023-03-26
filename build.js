@@ -1,6 +1,7 @@
 const esbuild = require("esbuild");
 const vuePlugin = require("esbuild-plugin-vue3");
 const { copy } = require("esbuild-plugin-copy");
+const envFilePlugin = require('esbuild-envfile-plugin');
 const commandLineArgs = require('command-line-args');
 
 /**
@@ -23,19 +24,25 @@ const options = commandLineArgs([
         ],
         bundle: true,
         outdir: "public",
+        external: ["env"],
         plugins: [
             vuePlugin({
                 generateHTML: "ui/index.html",
             }),
+            envFilePlugin,
             copy({
                 resolveFrom: 'cwd',
                 assets: {
-                    from: ['./ui/static/*'],
+                    from: ['./ui/static/**/*'],
                     to: ['./public'],
                 },
                 watch: true,
             }),
-        ]
+        ],
+        loader: {
+            '.woff': 'file',
+            '.woff2': 'file',
+        },
     });
 
     console.log(options);

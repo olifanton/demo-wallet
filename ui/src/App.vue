@@ -1,33 +1,32 @@
 <template>
-    <div class="center grid">
-        <vs-row>
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12">
-                <vs-button
-                    @click.prevent="count++"
-                    danger
-                    flat
-                >
-                    Count is: {{ count }}
-                </vs-button>
-
-                Kek!
-            </vs-col>
-        </vs-row>
-    </div>
+    <router-view></router-view>
 </template>
 
-<style lang="text/scss">
+<style lang="scss">
 
 </style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import {container} from "tsyringe";
+import WltPage from "@/components/layout/WltPage.vue";
+import WltEntryScreen from "@/components/screens/WltEntryScreen.vue";
+import {AppState} from "@/services/app-state";
 
 export default defineComponent({
+    components: {
+        WltEntryScreen,
+        WltPage,
+    },
     data() {
         return {
             count: 0
         }
+    },
+    created() {
+        const as: AppState = container.resolve(AppState);
+
+        as.getState().then(r => console.log(r));
     }
 });
 </script>

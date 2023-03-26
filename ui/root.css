@@ -2,6 +2,37 @@
     --vs-primary: 0, 136, 204;
     --vs-success: 23, 201, 100;
     --vs-danger: 242, 19, 93;
-    --vs-warn: 254, 130, 0;
+    --vs-warn: 232, 153, 2;
     --vs-dark: 36, 33, 69;
+    --vs-muted: 104, 104, 104;
+
+    --text-color: 38, 53, 61;
+
+    --border-radius: 4px;
+    --v-padding: 20px;
+}
+
+html {
+    font-size: 17px;
+    color: rgb(var(--text-color));
+}
+
+* {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+html, body {
+    font-weight: 400;
+}
+
+body {
+    background: #ecf0f1;
+}
+
+.vs-button {
+    border-radius: var(--border-radius);
+}
+
+.vs-icon-muted {
+    color: rgb(var(--vs-muted));
 }
