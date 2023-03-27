@@ -1,14 +1,14 @@
 <template>
-    <div class="wlt-entry-screen">
+    <div :class="bem()">
         <wlt-page>
-            <div class="wlt-entry-screen__i">
+            <div :class="bem('i')">
                 <vs-row>
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-                        <div class="wlt-entry-screen-logo">
+                        <div :class="bem('logo')">
                             <img
                                 src="/assets/olifanton-icon-colored.svg"
                                 alt="Olifanton logo"
-                                class="wlt-entry-screen-logo__img"
+                                :class="bem('logo-img')"
                             />
                         </div>
                     </vs-col>
@@ -16,7 +16,7 @@
 
                 <vs-row vs-justify="center">
                     <vs-col vs-w="8" vs-sm="12">
-                        <div class="wlt-entry-screen-buttons">
+                        <div :class="bem('buttons')">
                             <vs-divider>
                                 Start using
                             </vs-divider>
@@ -33,7 +33,7 @@
                                 Import wallet
                             </vs-button>
 
-                            <span class="wlt-entry-screen-buttons__warn-tooltip">
+                            <span :class="bem('warn-tooltip')">
                                 <vs-tooltip text="Testnet only">
                                     <vs-icon icon="warning_amber" icon-pack="material-icons" color="muted"></vs-icon>
                                 </vs-tooltip>
@@ -68,30 +68,30 @@
         margin-top: calc(var(--logo-size) * -1);
     }
 
-    &-logo {
+    &__logo {
         display: block;
         width: 100%;
         margin: var(--v-padding) 0;
         text-align: center;
-
-        &__img {
-            max-width: var(--logo-size);
-            height: auto;
-            pointer-events: none;
-            user-select: none;
-            filter: drop-shadow(0px 2px 5px rgba(0, 130, 211, 0.3));
-        }
     }
 
-    &-buttons {
+    &__logo-img {
+        max-width: var(--logo-size);
+        height: auto;
+        pointer-events: none;
+        user-select: none;
+        filter: drop-shadow(0px 2px 5px rgba(0, 130, 211, 0.3));
+    }
+
+    &__buttons {
         margin: var(--v-padding) 0;
         text-align: center;
+    }
 
-        &__warn-tooltip {
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 3px;
-        }
+    &__warn-tooltip {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 3px;
     }
 }
 </style>

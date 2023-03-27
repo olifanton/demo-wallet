@@ -6,6 +6,7 @@ import "reflect-metadata";
 import App from "@/App.vue";
 import "vuesax3/dist/vuesax.css";
 import "material-icons/iconfont/material-icons.css";
+import bemPlugin from "@/plugins/bem-plugin";
 import "./root.css";
 import "@/di";
 import routes from "@/routes";
@@ -31,5 +32,6 @@ app.use(Vuesax, {
         }
     }
 });
+app.use(bemPlugin);
 
 app.mount('#demo-wallet-app');

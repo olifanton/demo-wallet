@@ -1,20 +1,21 @@
 <template>
-    <div class="wlt-create-wallet-screen">
+    <div :class="bem()">
         <wlt-page>
             <WltScreenTitle title="Creating a new wallet" back-to="/"></WltScreenTitle>
 
             <div
-                class="wlt-create-wallet-screen__loading vs-con-loading__container"
+                class="vs-con-loading__container"
+                :class="bem('loading')"
                 id="wlt-create-wallet-screen-loading"
                 v-show="isLoading"
             ></div>
 
-            <div class="wlt-create-wallet-screen-stages" v-show="isLoading">
+            <div :class="bem('stages')" v-show="isLoading">
                 <div
                     v-for="(stage, key) in stages"
                     :key="key"
-                    class="wlt-create-wallet-screen-stages__stage"
-                    :class="{ '_text-muted': stage.value === StageStatus.NONE }"
+                    class=""
+                    :class="{...bem('stage'), ...{ '_text-muted': stage.value === StageStatus.NONE }}"
                 >
                     <vs-icon
                         icon="radio_button_unchecked"
@@ -40,15 +41,15 @@
                 </div>
             </div>
 
-            <ol class="wlt-create-wallet-screen-words" v-if="!isLoading && words">
+            <ol :class="bem('words')" v-if="!isLoading && words">
                 <li v-for="(word, key) in words" :key="key">{{ word }}</li>
             </ol>
 
             <vs-button v-if="!isLoading && !words" @click="startGenerating">
-                Generate mnemonic and save keys
+                Generate new wallet
             </vs-button>
 
-            <div v-if="!isLoading && words" class="wlt-create-wallet-screen__btn">
+            <div v-if="!isLoading && words" :class="bem('btn')">
                 <vs-button @click="copyWords" icon="content_copy" type="flat" color="dark" size="large">
                     Copy words
                 </vs-button>
@@ -77,21 +78,21 @@
         }
     }
 
-    &-stages {
+    &__stages {
         margin: var(--v-padding) 0;
         font-size: 0.9rem;
+    }
 
-        &__stage {
-            display: flex;
-            align-items: center;
+    &__stage {
+        display: flex;
+        align-items: center;
 
-            .vs-icon {
-                margin-right: 4px;
-            }
+        .vs-icon {
+            margin-right: 4px;
         }
     }
 
-    &-words {
+    &__words {
         column-count: 4;
         column-gap: 20px;
         margin: 20px;

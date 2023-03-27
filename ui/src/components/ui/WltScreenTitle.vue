@@ -1,6 +1,6 @@
 <template>
-<div class="wlt-screen-title">
-    <div class="wlt-screen-title__back">
+<div :class="bem()">
+    <div :class="bem('back')">
         <vs-button
             color="primary"
             type="flat"
@@ -13,7 +13,7 @@
         </vs-button>
     </div>
 
-    <div class="wlt-screen-title__text">
+    <div :class="bem('text')">
         {{ title }}
     </div>
 </div>

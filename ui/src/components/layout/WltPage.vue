@@ -1,6 +1,6 @@
 <template>
-    <div class="wlt-page">
-        <div class="wlt-page__i">
+    <div :class="bem()">
+        <div :class="bem('i')">
             <div class="grid">
                 <slot></slot>
             </div>
