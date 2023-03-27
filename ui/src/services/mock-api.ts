@@ -5,7 +5,7 @@ export class MockApi extends Api {
     fetch<T extends ApiResponse | ArrayBuffer>(endpoint: string, options: FetchOptions = {}): Promise<T> {
         endpoint = this.normalizeEndpoint(endpoint);
 
-        return delay(700)
+        return delay(300)
             // @ts-ignore
             .then(() => {
                 switch (endpoint) {

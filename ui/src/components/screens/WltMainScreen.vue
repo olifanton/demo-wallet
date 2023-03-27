@@ -41,7 +41,7 @@ export default defineComponent({
         });
 
         this.$vs.loading();
-        useAppStore().loadAppState();
+        appStore.loadAppState();
     },
 });
 </script>

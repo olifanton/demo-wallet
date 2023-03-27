@@ -29,7 +29,9 @@
 
                             or
 
-                            <vs-button>
+                            <vs-button
+                                to="/import-wallet"
+                            >
                                 Import wallet
                             </vs-button>
 
