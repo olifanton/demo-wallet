@@ -7,6 +7,7 @@ use DI\ContainerBuilder;
 $configs = [
     "monolog",
     "swoole",
+    "sqlite",
 ];
 
 return static function (ContainerBuilder $builder) use ($configs) {

@@ -15,6 +15,7 @@ services:
       - ./src:${BKND_DIR}/src
       - ./vendor:${BKND_DIR}/vendor
       - ./.env:${BKND_DIR}/.env
+      - ./composer.json:${BKND_DIR}/composer.json
     restart: on-failure
     command:
       - ${BKND_DIR}/bin/server.php

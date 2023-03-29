@@ -4,7 +4,6 @@ use DI\Container;
 use DI\ContainerBuilder;
 use Olifanton\DemoWallet\Http\Server\OpenSwoole\ServerFactory;
 use OpenSwoole\Runtime;
-use OpenSwoole\Util;
 use Psr\Log\LoggerInterface;
 
 co::set([
@@ -19,7 +18,7 @@ return static function (ContainerBuilder $builder) {
                 'port' => $_ENV["HTTP_LISTEN_PORT"],
                 'mode' => SWOOLE_PROCESS,
                 'settings' => [
-                    'worker_num' => Util::getCPUNum() * 2,
+                    'worker_num' => 2,
                     'document_root' => ROOT_DIR . '/public',
                     'enable_static_handler' => true,
                     'http_index_files' => ['index.html']
