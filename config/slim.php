@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use Olifanton\DemoWallet\Http\Server\Slim\AttributedRouterConfigurator;
-use Olifanton\DemoWallet\Http\Server\Slim\HttpErrorHandler;
+use Olifanton\DemoWallet\Application\Http\Server\Slim\AttributedRouterConfigurator;
+use Olifanton\DemoWallet\Application\Http\Server\Slim\HttpErrorHandler;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Olifanton\DemoWallet\Http\Attributes;
+namespace Olifanton\DemoWallet\Application\Http;
 
 use Attribute;
 

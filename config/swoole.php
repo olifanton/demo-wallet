@@ -2,7 +2,8 @@
 
 use DI\Container;
 use DI\ContainerBuilder;
-use Olifanton\DemoWallet\Http\Server\OpenSwoole\ServerFactory;
+use Olifanton\DemoWallet\Application\Helpers\ApplicationHelper;
+use Olifanton\DemoWallet\Application\Http\Server\OpenSwoole\ServerFactory;
 use OpenSwoole\Runtime;
 use Psr\Log\LoggerInterface;
 
@@ -19,7 +20,7 @@ return static function (ContainerBuilder $builder) {
                 'mode' => SWOOLE_PROCESS,
                 'settings' => [
                     'worker_num' => 2,
-                    'document_root' => ROOT_DIR . '/public',
+                    'document_root' => ApplicationHelper::getRootDirectory() . '/public',
                     'enable_static_handler' => true,
                     'http_index_files' => ['index.html']
                 ],

@@ -2,6 +2,7 @@
 
 use Aura\Sql\ExtendedPdo;
 use DI\ContainerBuilder;
+use Olifanton\DemoWallet\Application\Helpers\ApplicationHelper;
 
 return static function (ContainerBuilder $builder) {
     $builder->addDefinitions([
@@ -9,7 +10,7 @@ return static function (ContainerBuilder $builder) {
             return new ExtendedPdo(
                 sprintf(
                     'sqlite:%s',
-                    ROOT_DIR . "/runtime/db.sqlite",
+                    ApplicationHelper::getRootDirectory() . "/runtime/db.sqlite",
                 ),
                 null,
                 null,

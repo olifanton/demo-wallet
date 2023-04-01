@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Olifanton\DemoWallet\Http\Server\Slim;
+namespace Olifanton\DemoWallet\Application\Http\Server\Slim;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpException;
@@ -44,7 +44,7 @@ class HttpErrorHandler extends ErrorHandler
         }
 
         $answer = [
-            "is_error" => true,
+            "is_success" => true,
             "message" => $message,
         ];
 

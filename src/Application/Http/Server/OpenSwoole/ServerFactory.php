@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Olifanton\DemoWallet\Http\Server\OpenSwoole;
+namespace Olifanton\DemoWallet\Application\Http\Server\OpenSwoole;
 
 use OpenSwoole\Http\Server;
 use Psr\Log\LoggerInterface;

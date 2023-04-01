@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use DI\ContainerBuilder;
+use Olifanton\DemoWallet\Application\Modules\ModulesConfigurator;
 
 $configs = [
     "monolog",
@@ -25,6 +26,7 @@ return static function (ContainerBuilder $builder) use ($configs) {
                 throw new \RuntimeException('Unable to find config "'. $file .'"');
             }
 
+            /** @noinspection UsingInclusionOnceReturnValueInspection */
             $fn = require_once $scriptName;
             $fn($builder);
         }
@@ -34,4 +36,6 @@ return static function (ContainerBuilder $builder) use ($configs) {
     $builder->addDefinitions([
         //
     ]);
+
+    ModulesConfigurator::configure($builder);
 };

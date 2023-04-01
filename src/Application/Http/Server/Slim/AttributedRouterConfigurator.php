@@ -1,9 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Olifanton\DemoWallet\Http\Server\Slim;
+namespace Olifanton\DemoWallet\Application\Http\Server\Slim;
 
 use HaydenPierce\ClassFinder\ClassFinder;
-use Olifanton\DemoWallet\Http\Attributes\Route;
+use Olifanton\DemoWallet\Application\Helpers\ApplicationHelper;
+use Olifanton\DemoWallet\Application\Http\Route;
 use ReflectionClass;
 use ReflectionMethod;
 use Slim\App;
@@ -11,14 +12,14 @@ use Slim\App;
 class AttributedRouterConfigurator
 {
     /**
-     * @throws \Exception
+     * @throws \Throwable
      */
     public static function configure(App $app): void
     {
-        ClassFinder::setAppRoot(ROOT_DIR . "/");
+        ClassFinder::setAppRoot(ApplicationHelper::getRootDirectory() . "/");
         ClassFinder::disablePSR4Vendors();
         $classes = ClassFinder::getClassesInNamespace(
-            'Olifanton\DemoWallet',
+            ApplicationHelper::getNs(),
             ClassFinder::RECURSIVE_MODE,
         );
 

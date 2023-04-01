@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
-use Olifanton\DemoWallet\Http\Server\OpenSwoole\ServerFactory;
+use Olifanton\DemoWallet\Application\Http\Server\OpenSwoole\ServerFactory;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
 

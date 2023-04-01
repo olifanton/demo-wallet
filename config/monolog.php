@@ -5,6 +5,7 @@ use DI\ContainerBuilder;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Olifanton\DemoWallet\Application\Helpers\ApplicationHelper;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
@@ -25,7 +26,11 @@ return static function (ContainerBuilder $builder) {
             $logger->pushHandler($defaultHandler);
 
             $errorHandler = new StreamHandler(
-                ROOT_DIR . "/runtime/logs/error_" . date("d_m_Y") . ".log",
+                sprintf(
+                    "%s/runtime/logs/error_%s.log",
+                    ApplicationHelper::getRootDirectory(),
+                    date("d_m_Y"),
+                ),
                 LogLevel::ERROR,
             );
             $logger->pushHandler($errorHandler);
