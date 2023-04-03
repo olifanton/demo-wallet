@@ -44,7 +44,7 @@ class HttpErrorHandler extends ErrorHandler
         }
 
         $answer = [
-            "is_success" => true,
+            "is_success" => false,
             "message" => $message,
         ];
 

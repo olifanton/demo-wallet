@@ -2,8 +2,7 @@
 
 namespace Olifanton\DemoWallet\Application\Http\Server\Slim;
 
-use HaydenPierce\ClassFinder\ClassFinder;
-use Olifanton\DemoWallet\Application\Helpers\ApplicationHelper;
+use Olifanton\DemoWallet\Application\Helpers\ClassFinder;
 use Olifanton\DemoWallet\Application\Http\Route;
 use ReflectionClass;
 use ReflectionMethod;
@@ -16,12 +15,7 @@ class AttributedRouterConfigurator
      */
     public static function configure(App $app): void
     {
-        ClassFinder::setAppRoot(ApplicationHelper::getRootDirectory() . "/");
-        ClassFinder::disablePSR4Vendors();
-        $classes = ClassFinder::getClassesInNamespace(
-            ApplicationHelper::getNs(),
-            ClassFinder::RECURSIVE_MODE,
-        );
+        $classes = ClassFinder::find();
 
         foreach ($classes as $class) {
             $reflection = new ReflectionClass($class);

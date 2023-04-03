@@ -38,7 +38,7 @@
     "ext-openswoole": "*",
     "ext-pdo": "*",
     "ext-sodium": "*",
-    "aura/sql": "^2.6",
+    "aura/sql": "^5.1",
     "haydenpierce/class-finder": "^0.5.1",
     "monolog/monolog": "^3.3",
     "nyholm/psr7": "^1.5",
@@ -47,6 +47,7 @@
     "openswoole/core": "dev-master",
     "openswoole/ide-helper": "^22.0",
     "php-di/php-di": "^7.0",
+    "robinvdvleuten/ulid": "^5.0",
     "slim/slim": "^4.11",
     "vlucas/phpdotenv": "^5.5"
   },

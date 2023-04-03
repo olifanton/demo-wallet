@@ -3,8 +3,8 @@
 namespace Olifanton\DemoWallet\Application\Modules;
 
 use DI\ContainerBuilder;
-use HaydenPierce\ClassFinder\ClassFinder;
-use Olifanton\DemoWallet\Application\Helpers\ApplicationHelper;
+use Olifanton\DemoWallet\Application\Helpers\ClassFinder;
+use Olifanton\DemoWallet\Application\Helpers\ClassFinderFilter;
 use Olifanton\DemoWallet\Application\ModuleBootstrapper;
 
 final class ModulesConfigurator
@@ -14,19 +14,13 @@ final class ModulesConfigurator
      */
     public static function configure(ContainerBuilder $builder): void
     {
-        ClassFinder::setAppRoot(ApplicationHelper::getRootDirectory() . "/");
-        ClassFinder::disablePSR4Vendors();
-        $classes = ClassFinder::getClassesInNamespace(
-            ApplicationHelper::getNs(),
-            ClassFinder::RECURSIVE_MODE,
+        $classes = ClassFinder::find(
+            (new ClassFinderFilter())->withSubclassOf(ModuleBootstrapper::class),
         );
-
         $dg = new DependencyGraph();
 
         foreach ($classes as $class) {
-            if (is_subclass_of($class, ModuleBootstrapper::class)) {
-                $dg->requires($class, call_user_func([$class, "requires"]));
-            }
+            $dg->requires($class, call_user_func([$class, "requires"]));
         }
 
         foreach ($dg->getTopologicalSorted() as $bootstrapper) {

@@ -13,7 +13,7 @@ interface WalletsStorage
 
     public function getCount(?WalletsFilter $filter = null): int;
 
-    public function save(Wallet $wallet): Wallet;
+    public function save(Wallet $wallet): void;
 
     public function delete(string $walletId): void;
 }
