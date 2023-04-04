@@ -13,6 +13,35 @@ use Ulid\Ulid;
 
 class SqliteWalletStorageTest extends StorageTestCase
 {
+    private SecretKey $secretKeyStub;
+
+    /**
+     * @throws \Throwable
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->secretKeyStub = SecretKey::create(implode(" ", [
+            'bring',  'like',    'escape',
+            'health', 'chimney', 'pear',
+            'whale',  'peasant', 'drum',
+            'beach',  'mass',    'garden',
+            'riot',   'alien',   'possible',
+            'bus',    'shove',   'unable',
+            'jar',    'anxiety', 'click',
+            'salon',  'canoe',   'lion',
+        ]));
+        $this->getSecretKeyStorage()->add($this->secretKeyStub);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->getSecretKeyStorage()->delete($this->secretKeyStub->getId());
+
+        parent::tearDown();
+    }
+
     private function getInstance(): SqliteWalletStorage
     {
         return new SqliteWalletStorage(
@@ -30,33 +59,35 @@ class SqliteWalletStorageTest extends StorageTestCase
     /**
      * @throws \Throwable
      */
-    public function testSaveNewWalletComplex(): void
+    public function testWalletComplexCrud(): void
     {
-        $secretKey = SecretKey::create(implode(" ", [
-            'bring',  'like',    'escape',
-            'health', 'chimney', 'pear',
-            'whale',  'peasant', 'drum',
-            'beach',  'mass',    'garden',
-            'riot',   'alien',   'possible',
-            'bus',    'shove',   'unable',
-            'jar',    'anxiety', 'click',
-            'salon',  'canoe',   'lion',
-        ]));
-        $this->getSecretKeyStorage()->add($secretKey);
-
         $wallet = (new Wallet())
             ->withId((string)Ulid::generate())
             ->withType("foo")
             ->withName("Foo")
-            ->withSecretKeyId($secretKey->getId());
+            ->withSecretKeyId($this->secretKeyStub->getId());
 
         $instance = $this->getInstance();
-
         $instance->save($wallet);
 
         $this->assertEquals(
             1,
             $instance->getCount((new WalletsFilter())->withId($wallet->getId())),
+        );
+
+        $wallet = $wallet->withName("Bar")->withType("bar");
+        $instance->save($wallet);
+
+        $w0 = $instance->getList((new WalletsFilter())->withId($wallet->getId()))[0];
+
+        $this->assertEquals("Bar", $w0->getName());
+        $this->assertEquals("bar", $w0->getType());
+
+        $instance->delete($w0->getId());
+
+        $this->assertEquals(
+            0,
+            $instance->getCount(),
         );
     }
 }

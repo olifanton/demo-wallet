@@ -4,11 +4,10 @@ namespace Olifanton\DemoWallet\Modules\Wallets\Models;
 
 use Olifanton\DemoWallet\Application\Helpers\Sqlite\AutomapperColumn;
 use Olifanton\DemoWallet\Application\Models\AutomapperUlidIdTrait;
-use Olifanton\DemoWallet\Application\Storage\Serializers\KeyPairDeserializer;
+use Olifanton\DemoWallet\Modules\Wallets\Storages\Serializers\KeyPairDeserializer;
 use Olifanton\Interop\KeyPair;
 use Olifanton\Mnemonic\TonMnemonic;
 use Ulid\Ulid;
-use function DeepCopy\deep_copy;
 
 class SecretKey
 {
@@ -23,14 +22,6 @@ class SecretKey
     public function getKeyPair(): ?KeyPair
     {
         return $this->keyPair;
-    }
-
-    public function withKeyPair(KeyPair $keyPair): self
-    {
-        $instance = deep_copy($this);
-        $instance->keyPair = $keyPair;
-
-        return $instance;
     }
 
     public function getMnemonicPhrase(): ?string
