@@ -62,8 +62,8 @@ export class Api {
         return {
             isSuccess: data.is_success ?? false,
             message: data.message ?? null,
-            data: data,
-        }
+            data: data.data,
+        };
     }
 
     protected normalizeEndpoint(endpoint: string): string

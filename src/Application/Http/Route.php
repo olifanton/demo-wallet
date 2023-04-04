@@ -7,6 +7,9 @@ use Attribute;
 #[Attribute(Attribute::TARGET_METHOD)]
 readonly class Route
 {
+    /**
+     * @param string[] $method
+     */
     public function __construct(
         public string $pattern,
         public array  $method = ["GET"],

@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Olifanton\DemoWallet\Modules\ApplicationState\Actions;
+namespace Olifanton\DemoWallet\Modules\Wallets\Actions;
 
 use Olifanton\DemoWallet\Application\Http\HttpHelper;
 use Olifanton\DemoWallet\Application\Http\Route;
-use Olifanton\DemoWallet\Modules\ApplicationState\UseCases as UseCases;
+use Olifanton\DemoWallet\Modules\Wallets\UseCases as UseCases;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 readonly class Http
 {
     public function __construct(
-        private UseCases\GetState\GetStateHandler $getStateHandler,
+        private UseCases\GenerateWords\GenerateWordsHandler $generateWordsHandler,
     )
     {
     }
@@ -19,13 +19,13 @@ readonly class Http
     /**
      * @throws \Throwable
      */
-    #[Route("/state")]
-    public function state(ServerRequestInterface $request,
+    #[Route("/wallet/generate-words", ["POST"])]
+    public function generateWords(ServerRequestInterface $request,
                           ResponseInterface $response,
                           array $args): ResponseInterface
     {
         return HttpHelper::json(
-            $this->getStateHandler->handle(new UseCases\GetState\GetStateCommand()),
+            $this->generateWordsHandler->handle(new UseCases\GenerateWords\GenerateWordsCommand()),
         );
     }
 }

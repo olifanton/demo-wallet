@@ -9,3 +9,7 @@ import {MockApi} from "@/services/mock-api";
 container.register<Api>(Api, {
     useValue: new MockApi(env.UI_API_BASE_URI),
 });
+
+container.register<Api>('realApi', {
+    useValue: new Api(env.UI_API_BASE_URI),
+});
