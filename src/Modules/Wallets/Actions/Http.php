@@ -21,11 +21,24 @@ readonly class Http
      */
     #[Route("/wallet/generate-words", ["POST"])]
     public function generateWords(ServerRequestInterface $request,
-                          ResponseInterface $response,
-                          array $args): ResponseInterface
+                                  ResponseInterface $response,
+                                  array $args,
+    ): ResponseInterface
     {
         return HttpHelper::json(
             $this->generateWordsHandler->handle(new UseCases\GenerateWords\GenerateWordsCommand()),
         );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Route("/wallet/save-wallet", ["POST"])]
+    public function save(ServerRequestInterface $request,
+                         ResponseInterface $response,
+                         array $args,
+    ): ResponseInterface
+    {
+        //
     }
 }
