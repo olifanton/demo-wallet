@@ -21,7 +21,7 @@ export class WalletCreator {
             });
     }
 
-    async saveWallet(words: string[]): Promise<boolean>
+    async saveWallet(words: string[]): Promise<{walletId: string|null}>
     {
         return this
             .api
@@ -33,9 +33,11 @@ export class WalletCreator {
                         words,
                     },
                 })
-            .then((response: ApiResponse & any) => {
+            .then((response: any) => {
                 if (response.isSuccess) {
-                    return true;
+                    return {
+                        walletId: response.data?.wallet_id ?? null,
+                    }
                 }
 
                 return Promise.reject(new Error(response.message ?? "Wallet saving error"));

@@ -13,8 +13,12 @@
         </vs-button>
     </div>
 
-    <div :class="bem('text')">
-        {{ title }}
+    <div :class="bem('text-layout')">
+        <div :class="bem('logo')" v-if="logo"></div>
+        <div :class="bem('text')">
+            {{ title }}
+        </div>
+        <slot></slot>
     </div>
 </div>
 </template>
@@ -27,10 +31,25 @@
 
     }
 
+    &__text-layout {
+        display: flex;
+        align-items: center;
+        clear: both;
+    }
+
     &__text {
+        margin-right: 8px;
         clear: both;
         font-weight: 600;
         font-size: 2rem;
+    }
+
+    &__logo {
+        width: 49px;
+        height: 49px;
+        margin-right: 8px;
+        background: url("/assets/olifanton-icon-mono.svg") no-repeat center center;
+        background-size: contain;
     }
 }
 </style>
@@ -54,6 +73,10 @@ export default defineComponent({
         title: {
             type: String,
             required: true,
+        },
+        logo: {
+            type: Boolean,
+            default: false,
         },
     },
 })

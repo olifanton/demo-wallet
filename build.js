@@ -24,7 +24,7 @@ const options = commandLineArgs([
         ],
         bundle: true,
         outdir: "public",
-        external: ["env"],
+        external: ["env", "/assets/*"],
         plugins: [
             vuePlugin({
                 generateHTML: "ui/index.html",

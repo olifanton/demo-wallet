@@ -11,6 +11,7 @@
 <style lang="scss">
 .wlt-page {
     padding: 0 16px;
+    min-height: 100vh;
 
     &__i {
         max-width: 960px;

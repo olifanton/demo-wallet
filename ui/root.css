@@ -1,4 +1,6 @@
 :root {
+    --color-bg: 236, 240, 241;
+
     --vs-primary: 0, 136, 204;
     --vs-success: 23, 201, 100;
     --vs-danger: 242, 19, 93;
@@ -26,7 +28,7 @@ html, body {
 }
 
 body {
-    background: #ecf0f1;
+    background: rgb(var(--color-bg));
 }
 
 ._text-muted {
@@ -35,6 +37,11 @@ body {
 
 .vs-button {
     border-radius: var(--border-radius);
+}
+
+.vs-button--block {
+    width: 100%;
+    display: block;
 }
 
 .vs-icon-muted {

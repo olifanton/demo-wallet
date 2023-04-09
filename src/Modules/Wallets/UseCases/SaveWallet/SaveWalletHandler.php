@@ -7,6 +7,7 @@ use Olifanton\DemoWallet\Application\Http\GenericApiAnswer;
 use Olifanton\DemoWallet\Modules\Wallets\Models\SecretKey;
 use Olifanton\DemoWallet\Modules\Wallets\Models\Wallet;
 use Olifanton\DemoWallet\Modules\Wallets\Storages\SecretKeyStorage;
+use Olifanton\DemoWallet\Modules\Wallets\Storages\WalletsFilter;
 use Olifanton\DemoWallet\Modules\Wallets\Storages\WalletsStorage;
 use Olifanton\Mnemonic\Exceptions\TonMnemonicException;
 use Olifanton\Mnemonic\TonMnemonic;
@@ -33,14 +34,28 @@ readonly class SaveWalletHandler
 
         $keyPair = TonMnemonic::mnemonicToKeyPair($words);
         $key = $this->keyStorage->getBySecretKeyValue($keyPair->secretKey);
+        $walletId = null;
 
         if (!$key) {
             $key = SecretKey::createFromKeyPair($keyPair, $words);
             $this->keyStorage->add($key);
             $wallet = Wallet::create($key->getId());
             $this->walletsStorage->save($wallet);
+            $walletId = $wallet->getId();
+        } else {
+            $wallets = $this
+                ->walletsStorage
+                ->getList(
+                    (new WalletsFilter())->withSecretKeyId($key->getId())
+                );
+
+            if (!empty($wallets)) {
+                $walletId = $wallets[0]->getId();
+            }
         }
 
-        return GenericApiAnswer::success();
+        return GenericApiAnswer::success([
+            "wallet_id" => $walletId,
+        ]);
     }
 }

@@ -6,6 +6,8 @@ class WalletsFilter
 {
     private ?array $ids = null;
 
+    private ?string $secretKeyId = null;
+
     /**
      * @return string[]|null
      */
@@ -18,6 +20,19 @@ class WalletsFilter
     {
         $instance = clone $this;
         $instance->ids = $walletId;
+
+        return $instance;
+    }
+
+    public function getSecretKeyId(): ?string
+    {
+        return $this->secretKeyId;
+    }
+
+    public function withSecretKeyId(string $secretKeyId): self
+    {
+        $instance = clone $this;
+        $instance->secretKeyId = $secretKeyId;
 
         return $instance;
     }

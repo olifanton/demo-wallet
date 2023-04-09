@@ -41,7 +41,7 @@ export const useWalletCreatorStore = defineStore('wallet-creator', {
         },
     }) as WalletCreatorStoreState,
     actions: {
-        async generateNewWallet() {
+        async generateNewWallet(): Promise<string> {
             const notificationStore = useNotificationStore();
 
             try {
@@ -58,7 +58,7 @@ export const useWalletCreatorStore = defineStore('wallet-creator', {
                 this.$patch((state) => {
                     state.stages.saving.value = StageStatus.IN_PROGRESS;
                 });
-                await walletCreator.saveWallet(this.words.map((word: string) => word));
+                const data = await walletCreator.saveWallet(this.words.map((word: string) => word));
                 this.$patch((state) => {
                     state.stages.saving.value = StageStatus.DONE;
                 });
@@ -69,6 +69,8 @@ export const useWalletCreatorStore = defineStore('wallet-creator', {
                     'New wallet',
                     'New wallet successfully created',
                 );
+
+                return data.walletId;
             } catch (e) {
                 this.isLoading = false;
 

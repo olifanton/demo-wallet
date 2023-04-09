@@ -53,7 +53,11 @@
                 <vs-button @click="copyWords" icon="content_copy" type="flat" color="dark" size="large">
                     Copy words
                 </vs-button>
-                <vs-button to="/" size="large" icon="emoji_emotions">
+                <vs-button
+                    :to="`/${newWalletId ? '?wallet=' + newWalletId : ''}`"
+                    size="large"
+                    icon="emoji_emotions"
+                >
                     Start using wallet
                 </vs-button>
             </div>
@@ -120,6 +124,11 @@ export default defineComponent({
         WltScreenTitle,
         WltPage,
     },
+    data() {
+        return {
+            newWalletId: null,
+        };
+    },
     computed: {
         StageStatus() {
             return StageStatus
@@ -144,7 +153,13 @@ export default defineComponent({
     },
     methods: {
         startGenerating() {
-            useWalletCreatorStore().generateNewWallet();
+            useWalletCreatorStore()
+                .generateNewWallet()
+                .then((newWalletId) => {
+                    console.log(newWalletId);
+
+                    this.newWalletId = newWalletId;
+                });
         },
         copyWords() {
             navigator

@@ -141,6 +141,14 @@ class SqliteWalletStorage extends SqliteStorage implements WalletsStorage
                 ];
                 $sh->bindAll($in->getBindValues());
             }
+
+            if ($secretKeyId = $filter->getSecretKeyId()) {
+                $where[] = [
+                    "AND",
+                    "T.secret_key_id = :secretKeyId",
+                ];
+                $sh->bind("secretKeyId", $secretKeyId);
+            }
         }
 
         $sh->setWhereArray($where);

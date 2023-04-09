@@ -7,6 +7,7 @@ import App from "@/App.vue";
 import "vuesax3/dist/vuesax.css";
 import "material-icons/iconfont/material-icons.css";
 import bemPlugin from "@/plugins/bem-plugin";
+import clickOutsidePlugin from "@/plugins/click-outside-plugin";
 import "./root.css";
 import "@/di";
 import routes from "@/routes";
@@ -33,5 +34,6 @@ app.use(Vuesax, {
     }
 });
 app.use(bemPlugin);
+app.use(clickOutsidePlugin);
 
 app.mount('#demo-wallet-app');
