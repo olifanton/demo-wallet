@@ -41,6 +41,8 @@
                 size="large"
                 icon="account_balance_wallet"
                 :disabled="!isAllWordsValid"
+                :loading="isImportProgress"
+                @click="importWallet"
             >
                 Import wallet
             </vs-button>
@@ -84,6 +86,7 @@ import WltPage from "@/components/layout/WltPage.vue";
 import WltScreenTitle from "@/components/ui/WltScreenTitle.vue";
 import {isValidWord} from "@/services/bip39";
 import pip39English from "@/services/data/bip39-english";
+import {useWalletCreatorStore} from "@/stores/wallet-creator-store";
 
 export default defineComponent({
     name: "wlt-import-wallet-screen",
@@ -115,6 +118,9 @@ export default defineComponent({
             }
 
             return false;
+        },
+        isImportProgress() {
+            return useWalletCreatorStore().isLoading;
         },
     },
     methods: {
@@ -158,6 +164,15 @@ export default defineComponent({
                     }
                 }
             }, 0);
+        },
+        importWallet() {
+            if (this.isAllWordsValid) {
+                useWalletCreatorStore()
+                    .importWallet(Object.values(this.words))
+                    .then(() => {
+                        this.$router.replace('/');
+                    });
+            }
         },
     }
 });

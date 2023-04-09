@@ -9,14 +9,6 @@ export class MockApi extends Api {
         endpoint = this.normalizeEndpoint(endpoint);
 
         switch (endpoint) {
-            case "/wallet/save-wallet":
-                // @ts-ignore
-                return delay(300).then(() => {
-                    return {
-                        isSuccess: true,
-                    }
-                });
-
             default:
                 return realApi.fetch(endpoint, options);
         }

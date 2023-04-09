@@ -26,7 +26,7 @@ app.use(Vuesax, {
             primary: 'rgb(0, 136, 204)',
             success: 'rgb(23, 201, 100)',
             danger: 'rgb(231, 56, 71)',
-            warning: 'rgb(232, 153, 2)',
+            warning: 'rgb(204, 94, 4)',
             dark: 'rgb(36, 33, 69)',
             muted: 'rgb(104, 104, 104)',
         }

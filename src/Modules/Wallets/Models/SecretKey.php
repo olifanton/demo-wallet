@@ -42,4 +42,17 @@ class SecretKey
 
         return $instance;
     }
+
+    /**
+     * @param string[] $words
+     */
+    public static function createFromKeyPair(KeyPair $keyPair, array $words): self
+    {
+        $instance = new self();
+        $instance->keyPair = $keyPair;
+        $instance->seed = implode(" ", $words);
+        $instance->id = (string)Ulid::generate();
+
+        return $instance;
+    }
 }

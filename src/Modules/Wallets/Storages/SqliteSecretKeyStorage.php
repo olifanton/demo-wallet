@@ -6,6 +6,7 @@ use Olifanton\DemoWallet\Application\Helpers\Sqlite\Automapper;
 use Olifanton\DemoWallet\Application\Storage\SqliteStorage;
 use Olifanton\DemoWallet\Modules\Wallets\Models\SecretKey;
 use Olifanton\Interop\Bytes;
+use Olifanton\TypedArrays\Uint8Array;
 
 class SqliteSecretKeyStorage extends SqliteStorage implements SecretKeyStorage
 {
@@ -31,6 +32,26 @@ class SqliteSecretKeyStorage extends SqliteStorage implements SecretKeyStorage
         $sth = $this->pdo->prepare($sql);
         $sth->execute([
             ":id" => $secretKeyId,
+        ]);
+
+        if ($row = $sth->fetch()) {
+            return $this->automapper->map($row);
+        }
+
+        return null;
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function getBySecretKeyValue(Uint8Array $secretKey): ?SecretKey
+    {
+        self::createTable($this->pdo);
+
+        $sql = /** @lang SQLite */"SELECT * FROM secret_keys WHERE secret_key = :secretKey";
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute([
+            ":secretKey" => Bytes::bytesToHexString($secretKey),
         ]);
 
         if ($row = $sth->fetch()) {

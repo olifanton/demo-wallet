@@ -7,8 +7,8 @@ use Slim\App;
 
 return static function (App $app) {
     $app->setBasePath("/api");
-    $app->addRoutingMiddleware();
     $app->addBodyParsingMiddleware();
+    $app->addRoutingMiddleware();
     $errorHandler = new HttpErrorHandler(
         $app->getCallableResolver(),
         $app->getResponseFactory(),

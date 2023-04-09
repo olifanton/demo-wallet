@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
+use Olifanton\DemoWallet\Application\Http\Server\OpenSwoole\Helper;
 use Olifanton\DemoWallet\Application\Http\Server\OpenSwoole\ServerFactory;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
@@ -31,7 +32,7 @@ $appConfigurator($app);
 $serverFactory = $container->get(ServerFactory::class);
 
 $server = $serverFactory->createServer();
-\OpenSwoole\Core\Helper::handle($server, function (ServerRequestInterface $request) use ($app) {
+Helper::handle($server, function (ServerRequestInterface $request) use ($app) {
     return $app->handle($request);
 });
 

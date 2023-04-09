@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {container} from "tsyringe";
 import {AppState} from "@/services/app-state";
 import {useNotificationStore} from "@/stores/notification-store";
+import {delay} from "@/helpers";
 
 interface AppStoreState {
     isLoading: boolean,
@@ -21,6 +22,7 @@ export const useAppStore = defineStore('app', {
             try {
                 this.isLoading = true;
                 this.isInitialized = await appStateService.getState();
+                await delay(300);
                 this.isLoading = false;
             } catch (e) {
                 this.isLoading = false;

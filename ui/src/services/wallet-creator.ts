@@ -29,7 +29,9 @@ export class WalletCreator {
                 'wallet/save-wallet',
                 {
                     method: HttpMethod.POST,
-                    data: words,
+                    data: {
+                        words,
+                    },
                 })
             .then((response: ApiResponse & any) => {
                 if (response.isSuccess) {

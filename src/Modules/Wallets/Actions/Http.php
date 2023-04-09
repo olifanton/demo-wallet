@@ -12,6 +12,7 @@ readonly class Http
 {
     public function __construct(
         private UseCases\GenerateWords\GenerateWordsHandler $generateWordsHandler,
+        private UseCases\SaveWallet\SaveWalletHandler $saveWalletHandler,
     )
     {
     }
@@ -39,6 +40,10 @@ readonly class Http
                          array $args,
     ): ResponseInterface
     {
-        //
+        return HttpHelper::json(
+            $this->saveWalletHandler->handle(
+                UseCases\SaveWallet\SaveWalletCommand::fromRequest($request),
+            ),
+        );
     }
 }

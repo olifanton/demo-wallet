@@ -4,6 +4,8 @@ namespace Olifanton\DemoWallet\Modules\Wallets\Models;
 
 use Olifanton\DemoWallet\Application\Helpers\Sqlite\AutomapperColumn;
 use Olifanton\DemoWallet\Application\Models\AutomapperUlidIdTrait;
+use Olifanton\Ton\Contracts\Wallets\V3\WalletV3R2;
+use Ulid\Ulid;
 use function DeepCopy\deep_copy;
 
 class Wallet
@@ -54,6 +56,17 @@ class Wallet
     {
         $instance = deep_copy($this);
         $instance->type = $type;
+
+        return $instance;
+    }
+
+    public static function create(string $secretKeyId): self
+    {
+        $instance = new self();
+        $instance->secretKeyId = $secretKeyId;
+        $instance->id = (string)Ulid::generate();
+        $instance->name = "Wallet " . date("d.M.Y H:i");
+        $instance->type = WalletV3R2::getName();
 
         return $instance;
     }

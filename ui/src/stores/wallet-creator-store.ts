@@ -79,11 +79,35 @@ export const useWalletCreatorStore = defineStore('wallet-creator', {
             }
         },
 
+        async importWallet(words: Array<string>) {
+            this.clearState();
+
+            const notificationStore = useNotificationStore();
+
+            try {
+                this.isLoading = true;
+                await walletCreator.saveWallet(words.map((word: string) => word));
+                this.isLoading = false;
+
+                notificationStore.showSuccess(
+                    'New wallet',
+                    'New wallet successfully imported',
+                );
+            } catch (e) {
+                this.isLoading = false;
+
+                notificationStore.showError(
+                    'Wallet import error',
+                    e.message ? e.message : e,
+                );
+            }
+        },
+
         clearState() {
             this.isLoading = false;
             this.words = null;
             this.stages.mnemonic.value = StageStatus.NONE;
             this.stages.saving.value = StageStatus.NONE;
-        }
+        },
     }
 });

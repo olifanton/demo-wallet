@@ -3,10 +3,13 @@
 namespace Olifanton\DemoWallet\Modules\Wallets\Storages;
 
 use Olifanton\DemoWallet\Modules\Wallets\Models\SecretKey;
+use Olifanton\TypedArrays\Uint8Array;
 
 interface SecretKeyStorage
 {
     public function getById(string $secretKeyId): ?SecretKey;
+
+    public function getBySecretKeyValue(Uint8Array $secretKey): ?SecretKey;
 
     public function delete(string $secretKeyId): void;
 

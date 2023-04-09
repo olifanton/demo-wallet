@@ -60,12 +60,14 @@
     "phpunit/phpunit": "^10.0"
   },
   "scripts": {
+    "test": "XDEBUG_MODE=coverage phpunit  --coverage-html build/coverage",
     "phplint": "phplint -c .phplint.yml",
     "phpstan": "phpstan analyse -c phpstan.neon --ansi --xdebug",
     "start": "XDEBUG_MODE=off php bin/server.php",
     "checks": [
       "@phplint",
-      "@phpstan"
+      "@phpstan",
+      "@test"
     ]
   },
   "repositories": [
