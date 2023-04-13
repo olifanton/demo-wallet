@@ -2,10 +2,10 @@
 
 namespace Olifanton\DemoWallet\Modules\Wallets\UseCases\SaveWallet;
 
+use Olifanton\DemoWallet\Application\Exceptions\InvalidParamsException;
 use Olifanton\DemoWallet\Application\Helpers\Validation;
 use Olifanton\Mnemonic\Wordlist\Bip39English;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Exception\HttpBadRequestException;
 use Valitron\Validator;
 
 readonly class SaveWalletCommand
@@ -19,6 +19,9 @@ readonly class SaveWalletCommand
     {
     }
 
+    /**
+     * @throws InvalidParamsException
+     */
     public static function fromRequest(ServerRequestInterface $request): self
     {
         $params = $request->getParsedBody();
@@ -27,8 +30,7 @@ readonly class SaveWalletCommand
         $v->rule("subset", "words", Bip39English::WORDS);
 
         if (!$v->validate()) {
-            throw new HttpBadRequestException(
-                $request,
+            throw new InvalidParamsException(
                 Validation::implodeValitronMessages($v),
             );
         }

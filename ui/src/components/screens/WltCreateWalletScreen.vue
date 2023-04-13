@@ -156,8 +156,6 @@ export default defineComponent({
             useWalletCreatorStore()
                 .generateNewWallet()
                 .then((newWalletId) => {
-                    console.log(newWalletId);
-
                     this.newWalletId = newWalletId;
                 });
         },

@@ -13,6 +13,7 @@ readonly class Http
     public function __construct(
         private UseCases\GenerateWords\GenerateWordsHandler $generateWordsHandler,
         private UseCases\SaveWallet\SaveWalletHandler $saveWalletHandler,
+        private UseCases\WalletState\WalletStateHandler $walletStateHandler,
     )
     {
     }
@@ -43,6 +44,23 @@ readonly class Http
         return HttpHelper::json(
             $this->saveWalletHandler->handle(
                 UseCases\SaveWallet\SaveWalletCommand::fromRequest($request),
+            ),
+        );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Route("/wallet/state/{walletId}")]
+    public function getState(ServerRequestInterface $request,
+                             ResponseInterface $response,
+                             array $args,
+
+    ): ResponseInterface
+    {
+        return HttpHelper::json(
+            $this->walletStateHandler->handle(
+                new UseCases\WalletState\GetStateCommand($args["walletId"] ?? null),
             ),
         );
     }

@@ -2,8 +2,12 @@
 
 namespace Olifanton\DemoWallet\Application\Http\Server\Slim;
 
+use Olifanton\DemoWallet\Application\Exceptions\EntityNotFoundException;
+use Olifanton\DemoWallet\Application\Exceptions\InvalidParamsException;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
+use Slim\Exception\HttpNotFoundException;
 use Slim\Handlers\ErrorHandler;
 
 class HttpErrorHandler extends ErrorHandler
@@ -12,7 +16,7 @@ class HttpErrorHandler extends ErrorHandler
     {
         $statusCode = 500;
         $message = "Application error";
-        $exception = $this->exception;
+        $exception = $this->tryConvertDomainException($this->exception);
 
         $this->logger->error(
             "[HttpErrorHandler] Unhandled error: " . $exception->getMessage(),
@@ -59,5 +63,26 @@ class HttpErrorHandler extends ErrorHandler
         $response->getBody()->write($body);
 
         return $response->withHeader('Content-Type', $contentType);
+    }
+
+    private function tryConvertDomainException(\Throwable $exception): \Throwable
+    {
+        if ($exception instanceof EntityNotFoundException) {
+            return new HttpNotFoundException(
+                $this->request,
+                $exception->getMessage(),
+                $exception,
+            );
+        }
+
+        if ($exception instanceof InvalidParamsException) {
+            return new HttpBadRequestException(
+                $this->request,
+                $exception->getMessage(),
+                $exception,
+            );
+        }
+
+        return $exception;
     }
 }
