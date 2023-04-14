@@ -6,13 +6,20 @@ use Olifanton\DemoWallet\Application\Exceptions\EntityNotFoundException;
 use Olifanton\DemoWallet\Application\Exceptions\InvalidParamsException;
 use Olifanton\DemoWallet\Application\Http\ApiAnswer;
 use Olifanton\DemoWallet\Application\Http\GenericApiAnswer;
+use Olifanton\DemoWallet\Modules\Wallets\Services\WalletContractFactory;
+use Olifanton\DemoWallet\Modules\Wallets\Storages\SecretKeyStorage;
 use Olifanton\DemoWallet\Modules\Wallets\Storages\WalletsFilter;
 use Olifanton\DemoWallet\Modules\Wallets\Storages\WalletsStorage;
+use Olifanton\Ton\Contracts\Exceptions\ContractException;
+use Olifanton\Ton\Transports\Toncenter\ToncenterV2Client;
 
 readonly class WalletStateHandler
 {
     public function __construct(
         private WalletsStorage $walletsStorage,
+        private SecretKeyStorage $secretKeyStorage,
+        private WalletContractFactory $walletContractFactory,
+        private ToncenterV2Client $toncenterV2Client,
     )
     {
     }
@@ -20,6 +27,7 @@ readonly class WalletStateHandler
     /**
      * @throws EntityNotFoundException
      * @throws InvalidParamsException
+     * @throws ContractException
      */
     public function handle(GetStateCommand $command): ApiAnswer
     {
@@ -40,12 +48,22 @@ readonly class WalletStateHandler
         }
 
         $wallet = $wallets[0];
+        $secretKey = $this->secretKeyStorage->getById($wallet->getSecretKeyId());
+        $walletContract = $this
+            ->walletContractFactory
+            ->getContract(
+                $wallet->getName(),
+                $secretKey->getKeyPair()->publicKey,
+            );
 
         return new GenericApiAnswer(
             true,
             data: [
                 "id" => $wallet->getId(),
                 "name" => $wallet->getName(),
+                "address" => $walletContract
+                    ->getAddress()
+                    ->toString(true, true, false),
             ],
         );
     }
