@@ -14,6 +14,7 @@ readonly class Http
         private UseCases\GenerateWords\GenerateWordsHandler $generateWordsHandler,
         private UseCases\SaveWallet\SaveWalletHandler $saveWalletHandler,
         private UseCases\WalletState\WalletStateHandler $walletStateHandler,
+        private UseCases\WalletsList\WalletsListHandler $walletsListHandler,
     )
     {
     }
@@ -61,6 +62,23 @@ readonly class Http
         return HttpHelper::json(
             $this->walletStateHandler->handle(
                 new UseCases\WalletState\GetStateCommand($args["walletId"] ?? null),
+            ),
+        );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Route("/wallets")]
+    public function getList(ServerRequestInterface $request,
+                             ResponseInterface $response,
+                             array $args,
+
+    ): ResponseInterface
+    {
+        return HttpHelper::json(
+            $this->walletsListHandler->handle(
+                new UseCases\WalletsList\WalletsListCommand(),
             ),
         );
     }

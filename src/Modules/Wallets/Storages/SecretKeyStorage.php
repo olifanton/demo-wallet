@@ -14,4 +14,6 @@ interface SecretKeyStorage
     public function delete(string $secretKeyId): void;
 
     public function add(SecretKey $key): void;
+
+    public function getList(?SecretKeyFilter $filter = null): array;
 }
