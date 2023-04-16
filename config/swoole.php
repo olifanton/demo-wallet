@@ -8,7 +8,7 @@ use OpenSwoole\Runtime;
 use Psr\Log\LoggerInterface;
 
 co::set([
-    'hook_flags' => Runtime::HOOK_CURL | Runtime::HOOK_TCP,
+    'hook_flags' => Runtime::HOOK_CURL | Runtime::HOOK_NATIVE_CURL | Runtime::HOOK_TCP,
 ]);
 
 return static function (ContainerBuilder $builder) {

@@ -4,7 +4,7 @@ namespace Olifanton\DemoWallet\Application;
 
 use DI\ContainerBuilder;
 
-abstract class ModuleBootstrapper
+abstract class ModuleBootstrapper implements Bootstrapper
 {
     private function __construct()
     {

@@ -9,6 +9,8 @@ $configs = [
     "monolog",
     "swoole",
     "sqlite",
+    "http-client",
+    "cache",
 ];
 
 return static function (ContainerBuilder $builder) use ($configs) {

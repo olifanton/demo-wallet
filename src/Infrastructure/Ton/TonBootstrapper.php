@@ -4,15 +4,14 @@ namespace Olifanton\DemoWallet\Infrastructure\Ton;
 
 use DI\Container;
 use DI\ContainerBuilder;
-use Http\Client\Common\HttpMethodsClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Client\Common\HttpMethodsClientInterface;
 use Olifanton\DemoWallet\Application\ModuleBootstrapper;
 use Olifanton\DemoWallet\Infrastructure\Ton\Helpers\ToncenterHelper;
 use Olifanton\Ton\Transport;
 use Olifanton\Ton\Transports\Toncenter\ClientOptions;
 use Olifanton\Ton\Transports\Toncenter\ToncenterHttpV2Client;
 use Olifanton\Ton\Transports\Toncenter\ToncenterTransport;
+use Olifanton\Ton\Transports\Toncenter\ToncenterV2Client;
 
 class TonBootstrapper extends ModuleBootstrapper
 {
@@ -22,13 +21,9 @@ class TonBootstrapper extends ModuleBootstrapper
     public static function boot(ContainerBuilder $builder): void
     {
         $builder->addDefinitions([
-            ToncenterHttpV2Client::class => static function () {
+            ToncenterV2Client::class => static function (Container $container) {
                 return new ToncenterHttpV2Client(
-                    new HttpMethodsClient(
-                        HttpClientDiscovery::find(),
-                        Psr17FactoryDiscovery::findRequestFactory(),
-                        Psr17FactoryDiscovery::findStreamFactory(),
-                    ),
+                    $container->get(HttpMethodsClientInterface::class),
                     new ClientOptions(
                         "https://testnet.toncenter.com/api/v2",
                         $_ENV["TONCENTER_API_KEY"],
@@ -38,7 +33,7 @@ class TonBootstrapper extends ModuleBootstrapper
 
             Transport::class => static function (Container $container) {
                 return new ToncenterTransport(
-                    $container->get(ToncenterHttpV2Client::class),
+                    $container->get(ToncenterV2Client::class),
                 );
             },
         ]);

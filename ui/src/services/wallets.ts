@@ -4,6 +4,7 @@ import {Api, ApiResponse, HttpMethod} from "@/services/api";
 export interface WalletState {
     id: string,
     name: string,
+    address: string,
 }
 
 @injectable()
@@ -25,6 +26,7 @@ export class Wallets {
                     return {
                         id: data.id,
                         name: data.name,
+                        address: data.address,
                     };
                 }
 

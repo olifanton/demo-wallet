@@ -3,6 +3,7 @@
 namespace Olifanton\DemoWallet\Application\Modules;
 
 use DI\ContainerBuilder;
+use Olifanton\DemoWallet\Application\Bootstrapper;
 use Olifanton\DemoWallet\Application\Helpers\ClassFinder;
 use Olifanton\DemoWallet\Application\Helpers\ClassFinderFilter;
 use Olifanton\DemoWallet\Application\ModuleBootstrapper;
@@ -15,12 +16,14 @@ final class ModulesConfigurator
     public static function configure(ContainerBuilder $builder): void
     {
         $classes = ClassFinder::find(
-            (new ClassFinderFilter())->withSubclassOf(ModuleBootstrapper::class),
+            (new ClassFinderFilter())->withSubclassOf(Bootstrapper::class),
         );
         $dg = new DependencyGraph();
 
         foreach ($classes as $class) {
-            $dg->requires($class, call_user_func([$class, "requires"]));
+            if ($class !== ModuleBootstrapper::class) {
+                $dg->requires($class, call_user_func([$class, "requires"]));
+            }
         }
 
         foreach ($dg->getTopologicalSorted() as $bootstrapper) {

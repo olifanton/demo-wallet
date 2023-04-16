@@ -47,8 +47,10 @@
     "openswoole/core": "dev-master",
     "openswoole/ide-helper": "^22.0",
     "php-di/php-di": "^7.0",
+    "php-http/curl-client": "^2.2",
     "robinvdvleuten/ulid": "^5.0",
     "slim/slim": "^4.11",
+    "symfony/cache": "^6.2",
     "vlucas/phpdotenv": "^5.5",
     "vlucas/valitron": "^1.4"
   },

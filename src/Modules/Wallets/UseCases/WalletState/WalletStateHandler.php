@@ -6,11 +6,14 @@ use Olifanton\DemoWallet\Application\Exceptions\EntityNotFoundException;
 use Olifanton\DemoWallet\Application\Exceptions\InvalidParamsException;
 use Olifanton\DemoWallet\Application\Http\ApiAnswer;
 use Olifanton\DemoWallet\Application\Http\GenericApiAnswer;
+use Olifanton\DemoWallet\Application\Infrastructure\TonPriceFetcher;
 use Olifanton\DemoWallet\Modules\Wallets\Services\WalletContractFactory;
 use Olifanton\DemoWallet\Modules\Wallets\Storages\SecretKeyStorage;
 use Olifanton\DemoWallet\Modules\Wallets\Storages\WalletsFilter;
 use Olifanton\DemoWallet\Modules\Wallets\Storages\WalletsStorage;
+use Olifanton\Interop\Units;
 use Olifanton\Ton\Contracts\Exceptions\ContractException;
+use Olifanton\Ton\Transports\Toncenter\Exceptions\ToncenterException;
 use Olifanton\Ton\Transports\Toncenter\ToncenterV2Client;
 
 readonly class WalletStateHandler
@@ -20,6 +23,7 @@ readonly class WalletStateHandler
         private SecretKeyStorage $secretKeyStorage,
         private WalletContractFactory $walletContractFactory,
         private ToncenterV2Client $toncenterV2Client,
+        private TonPriceFetcher $priceFetcher,
     )
     {
     }
@@ -28,6 +32,7 @@ readonly class WalletStateHandler
      * @throws EntityNotFoundException
      * @throws InvalidParamsException
      * @throws ContractException
+     * @throws ToncenterException
      */
     public function handle(GetStateCommand $command): ApiAnswer
     {
@@ -52,9 +57,23 @@ readonly class WalletStateHandler
         $walletContract = $this
             ->walletContractFactory
             ->getContract(
-                $wallet->getName(),
+                $wallet->getType(),
                 $secretKey->getKeyPair()->publicKey,
             );
+        $balance = $this
+            ->toncenterV2Client
+            ->getAddressBalance(
+                $walletContract->getAddress(),
+            );
+        $usdBalance = null;
+        $usdPrice = $this->priceFetcher->getCurrentUSDPrice();
+
+        if ($usdPrice !== null) {
+            $usdBalance = Units::fromNano($balance)
+                ->toBigDecimal()
+                ->multipliedBy($usdPrice)
+                ->toFloat();
+        }
 
         return new GenericApiAnswer(
             true,
@@ -64,6 +83,11 @@ readonly class WalletStateHandler
                 "address" => $walletContract
                     ->getAddress()
                     ->toString(true, true, false),
+                "balance" => [
+                    "nano" => $balance->toBase(10),
+                    "wei" => Units::fromNano($balance)->toFloat(),
+                    "usd" => $usdBalance,
+                ],
             ],
         );
     }
