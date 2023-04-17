@@ -22,6 +22,7 @@
     "sass": "^1.60.0"
   },
   "dependencies": {
+    "ether-converter": "^0.0.16",
     "material-icons": "^1.13.3",
     "pinia": "^2.0.33",
     "reflect-metadata": "^0.1.13",

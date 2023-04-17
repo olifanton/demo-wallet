@@ -2,8 +2,10 @@
     <wlt-page>
         <WltWorkspaceScreenTitle></WltWorkspaceScreenTitle>
 
-        <div v-if="currentWallet">
-            Current wallet: {{ currentWallet.name }}
+        <div>
+            <WltWorkspaceScreenActiveWallet
+                :wallet="currentWallet"
+            ></WltWorkspaceScreenActiveWallet>
         </div>
     </wlt-page>
 </template>
@@ -15,15 +17,17 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {useRoute} from 'vue-router';
+import {useWalletsStore} from "@/stores/wallets-store";
 import WltPage from "@/components/layout/WltPage.vue";
 import WltScreenTitle from "@/components/ui/WltScreenTitle.vue";
 import WltDropdown from "@/components/ui/WltDropdown.vue";
 import WltWorkspaceScreenTitle from "@screen/workspace-screen/Title.vue";
-import {useWalletsStore} from "@/stores/wallets-store";
+import WltWorkspaceScreenActiveWallet from "@screen/workspace-screen/ActiveWallet.vue";
 
 export default defineComponent({
     name: "wlt-workspace-screen",
     components: {
+        WltWorkspaceScreenActiveWallet,
         WltWorkspaceScreenTitle,
         WltDropdown,
         WltScreenTitle,

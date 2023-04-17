@@ -2,12 +2,12 @@
 
 namespace Olifanton\DemoWallet\Application\Http;
 
-class GenericApiAnswer implements ApiAnswer
+readonly class GenericApiAnswer implements ApiAnswer
 {
     public function __construct(
-        private readonly bool $isSuccess,
-        private readonly ?string $message = null,
-        private readonly ?array $data = null,
+        private bool $isSuccess,
+        private ?string $message = null,
+        private ?array $data = null,
     )
     {
     }

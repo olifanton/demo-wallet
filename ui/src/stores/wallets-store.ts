@@ -19,7 +19,13 @@ export const useWalletsStore = defineStore('wallets', {
     actions: {
         async setCurrentWalletId(walletId: string): Promise<void> {
             this.selectedWalletId = walletId;
+            this.$patch((state) => {
+                state.isLoading = true;
+            });
             this.selectedWalletState = await walletsService.loadWallet(walletId);
+            this.$patch((state) => {
+                state.isLoading = false;
+            });
         },
     },
 });

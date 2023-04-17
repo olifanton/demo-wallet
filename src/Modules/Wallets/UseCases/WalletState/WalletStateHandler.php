@@ -19,11 +19,11 @@ use Olifanton\Ton\Transports\Toncenter\ToncenterV2Client;
 readonly class WalletStateHandler
 {
     public function __construct(
-        private WalletsStorage $walletsStorage,
-        private SecretKeyStorage $secretKeyStorage,
+        private WalletsStorage        $walletsStorage,
+        private SecretKeyStorage      $secretKeyStorage,
         private WalletContractFactory $walletContractFactory,
-        private ToncenterV2Client $toncenterV2Client,
-        private TonPriceFetcher $priceFetcher,
+        private ToncenterV2Client     $toncenterV2Client,
+        private TonPriceFetcher       $priceFetcher,
     )
     {
     }
@@ -75,20 +75,17 @@ readonly class WalletStateHandler
                 ->toFloat();
         }
 
-        return new GenericApiAnswer(
-            true,
-            data: [
-                "id" => $wallet->getId(),
-                "name" => $wallet->getName(),
-                "address" => $walletContract
-                    ->getAddress()
-                    ->toString(true, true, false),
-                "balance" => [
-                    "nano" => $balance->toBase(10),
-                    "wei" => Units::fromNano($balance)->toFloat(),
-                    "usd" => $usdBalance,
-                ],
+        return GenericApiAnswer::success([
+            "id" => $wallet->getId(),
+            "name" => $wallet->getName(),
+            "address" => $walletContract
+                ->getAddress()
+                ->toString(true, true, false),
+            "balance" => [
+                "nano" => $balance->toBase(10),
+                "wei" => Units::fromNano($balance)->toFloat(),
+                "usd" => $usdBalance,
             ],
-        );
+        ]);
     }
 }

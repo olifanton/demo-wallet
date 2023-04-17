@@ -33,6 +33,7 @@
         background: rgb(var(--color-bg));
         border-radius: calc(var(--border-radius) * 2);
         box-shadow: 1px 3px 10px rgba(var(--text-color), 0.15);
+        z-index: 1;
     }
 }
 </style>
