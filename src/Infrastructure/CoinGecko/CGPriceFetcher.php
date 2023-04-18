@@ -27,9 +27,12 @@ class CGPriceFetcher implements TonPriceFetcher
             $cachedPrice = $this->cacheItemPool->getItem(self::CACHE_KEY);
 
             if ($cachedPrice->isHit()) {
+                $this->logger->debug("[CGPriceFetcher] Cache hit");
+
                 return $cachedPrice->get();
             }
 
+            $this->logger->debug("[CGPriceFetcher] Start CoinGecko request...");
             $response = $this
                 ->httpClient
                 ->get(

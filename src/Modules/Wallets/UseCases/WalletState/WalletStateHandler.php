@@ -15,6 +15,7 @@ use Olifanton\Interop\Units;
 use Olifanton\Ton\Contracts\Exceptions\ContractException;
 use Olifanton\Ton\Transports\Toncenter\Exceptions\ToncenterException;
 use Olifanton\Ton\Transports\Toncenter\ToncenterV2Client;
+use Psr\Log\LoggerInterface;
 
 readonly class WalletStateHandler
 {
@@ -24,6 +25,7 @@ readonly class WalletStateHandler
         private WalletContractFactory $walletContractFactory,
         private ToncenterV2Client     $toncenterV2Client,
         private TonPriceFetcher       $priceFetcher,
+        private LoggerInterface       $logger,
     )
     {
     }
@@ -60,11 +62,13 @@ readonly class WalletStateHandler
                 $wallet->getType(),
                 $secretKey->getKeyPair()->publicKey,
             );
+        $this->logger->debug("[WalletStateHandler] Start balance fetching...");
         $balance = $this
             ->toncenterV2Client
             ->getAddressBalance(
                 $walletContract->getAddress(),
             );
+        $this->logger->debug("[WalletStateHandler] Balance fetched");
         $usdBalance = null;
         $usdPrice = $this->priceFetcher->getCurrentUSDPrice();
 

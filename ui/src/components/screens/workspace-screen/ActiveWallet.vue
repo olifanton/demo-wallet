@@ -8,10 +8,12 @@
                         {{ wallet?.address }}
                         <a
                             :href="`https://testnet.tonscan.org/address/${wallet?.address}`"
+                            :class="bem('fast-icon')"
                             target="_blank"
-                            :class="bem('scanner-icon')"
                             title="Tonscan"
-                        ></a>
+                        >
+                            <vs-icon icon="explore"></vs-icon>
+                        </a>
                     </span>
                 </div>
             </div>
@@ -109,11 +111,12 @@
         font-size: 11px;
     }
 
-    &__scanner-icon {
+    &__fast-icon {
+        color: #ffffff;
+        text-decoration: none;
         display: inline-block;
         width: 24px;
         height: 24px;
-        background: url(/assets/tonscan-icon.svg) no-repeat center center;
         background-size: contain;
         vertical-align: text-bottom;
     }

@@ -6,6 +6,7 @@ import "reflect-metadata";
 import App from "@/App.vue";
 import "vuesax3/dist/vuesax.css";
 import "material-icons/iconfont/material-icons.css";
+import {vfmPlugin} from 'vue-final-modal'
 import bemPlugin from "@/plugins/bem-plugin";
 import clickOutsidePlugin from "@/plugins/click-outside-plugin";
 import "./root.css";
@@ -21,6 +22,7 @@ const app = createApp(App);
 
 app.use(pinia);
 app.use(router);
+app.use(vfmPlugin);
 app.use(Vuesax, {
     theme: {
         colors: {

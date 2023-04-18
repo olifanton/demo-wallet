@@ -28,6 +28,7 @@
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0",
     "vue": "^3.2.47",
+    "vue-final-modal": "^3.4.11",
     "vue-router": "^4.1.6",
     "vuesax3": "^4.1.1"
   }

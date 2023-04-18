@@ -55,8 +55,8 @@ export default defineComponent({
             default: false,
         },
         width: {
-            type: Number,
-            default: 300,
+            type: String,
+            default: "300",
         },
     },
 });

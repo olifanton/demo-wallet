@@ -1,17 +1,49 @@
 <template>
     <wlt-page>
-        <WltWorkspaceScreenTitle></WltWorkspaceScreenTitle>
+        <WltWorkspaceScreenTitle
+            :onSelectWallet="onWalletSelectBtnClick"
+        ></WltWorkspaceScreenTitle>
 
-        <div>
+        <div v-if="isWalletSelected">
             <WltWorkspaceScreenActiveWallet
                 :wallet="currentWallet"
             ></WltWorkspaceScreenActiveWallet>
         </div>
+
+        <div v-if="!isWalletSelected" :class="bem('empty-state')">
+            <vs-icon
+                icon="rocket_launch"
+                size="75px"
+                :class="bem('empty-state-icon')"
+            ></vs-icon>
+            <br />
+            <vs-button
+                type="border"
+                color="dark"
+                size="large"
+                @click="onWalletSelectBtnClick"
+            >Select wallet</vs-button>
+        </div>
+
+        <WltModal v-model="isShowWalletsSelectorModal">
+            <h1>WIP</h1>
+        </WltModal>
     </wlt-page>
 </template>
 
 <style lang="scss">
+.wlt-workspace-screen {
+    &__empty-state {
+        text-align: center;
+    }
 
+    &__empty-state-icon {
+        position: relative;
+        right: -5px;
+        pointer-events: none;
+        user-select: none;
+    }
+}
 </style>
 
 <script lang="ts">
@@ -23,10 +55,12 @@ import WltScreenTitle from "@/components/ui/WltScreenTitle.vue";
 import WltDropdown from "@/components/ui/WltDropdown.vue";
 import WltWorkspaceScreenTitle from "@screen/workspace-screen/Title.vue";
 import WltWorkspaceScreenActiveWallet from "@screen/workspace-screen/ActiveWallet.vue";
+import WltModal from "@/components/ui/WltModal.vue";
 
 export default defineComponent({
     name: "wlt-workspace-screen",
     components: {
+        WltModal,
         WltWorkspaceScreenActiveWallet,
         WltWorkspaceScreenTitle,
         WltDropdown,
@@ -44,11 +78,20 @@ export default defineComponent({
         currentWallet() {
             return useWalletsStore().selectedWalletState;
         },
+        isWalletSelected() {
+            return useWalletsStore().selectedWalletId !== null;
+        },
     },
     data() {
         return {
             addWalletDropdown: false,
+            isShowWalletsSelectorModal: false,
         };
+    },
+    methods: {
+        onWalletSelectBtnClick() {
+            this.isShowWalletsSelectorModal = true;
+        },
     },
 })
 </script>

@@ -25,6 +25,14 @@
                 </vs-button>
             </template>
         </WltDropdown>
+        <vs-button
+            @click="onSelectWallet"
+            type="flat"
+            color="dark"
+            :active="addWalletDropdown"
+        >
+            Select wallet
+        </vs-button>
     </WltScreenTitle>
 </template>
 
@@ -36,6 +44,13 @@ import WltScreenTitle from "@/components/ui/WltScreenTitle.vue";
 export default defineComponent({
     name: "wlt-workspace-screen-title",
     components: {WltDropdown, WltScreenTitle},
+    props: {
+        onSelectWallet: {
+            type: Function,
+            required: false,
+            default: () => {},
+        }
+    },
     data() {
         return {
             addWalletDropdown: false,
