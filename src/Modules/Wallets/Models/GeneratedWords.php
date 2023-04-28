@@ -11,9 +11,7 @@ readonly class GeneratedWords implements ApiAnswer
      */
     public function __construct(
         public array $words,
-    )
-    {
-    }
+    ) {}
 
     public function jsonSerialize(): array
     {

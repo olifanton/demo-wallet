@@ -3,7 +3,9 @@
 use DI\Container;
 use DI\ContainerBuilder;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Adapter\PdoAdapter;
+use Symfony\Component\Cache\Psr16Cache;
 
 return static function (ContainerBuilder $builder) {
     $builder->addDefinitions([
@@ -17,6 +19,9 @@ return static function (ContainerBuilder $builder) {
             $adapter->setLogger($container->get(\Psr\Log\LoggerInterface::class));
 
             return $adapter;
+        },
+        CacheInterface::class => static function (Container $container) {
+            return new Psr16Cache($container->get(CacheItemPoolInterface::class));
         },
     ]);
 };

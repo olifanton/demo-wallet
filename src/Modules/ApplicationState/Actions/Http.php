@@ -12,9 +12,7 @@ readonly class Http
 {
     public function __construct(
         private UseCases\GetState\GetStateHandler $getStateHandler,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws \Throwable

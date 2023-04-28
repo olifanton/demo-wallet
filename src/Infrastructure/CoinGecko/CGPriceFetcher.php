@@ -17,9 +17,7 @@ class CGPriceFetcher implements TonPriceFetcher
         private readonly HttpMethodsClientInterface $httpClient,
         private readonly CacheItemPoolInterface $cacheItemPool,
         private readonly LoggerInterface $logger,
-    )
-    {
-    }
+    ) {}
 
     public function getCurrentUSDPrice(): ?float
     {

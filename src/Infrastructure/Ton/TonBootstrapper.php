@@ -7,11 +7,14 @@ use DI\ContainerBuilder;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Olifanton\DemoWallet\Application\ModuleBootstrapper;
 use Olifanton\DemoWallet\Infrastructure\Ton\Helpers\ToncenterHelper;
+use Olifanton\Ton\Dns\DnsClient;
 use Olifanton\Ton\Transport;
 use Olifanton\Ton\Transports\Toncenter\ClientOptions;
 use Olifanton\Ton\Transports\Toncenter\ToncenterHttpV2Client;
 use Olifanton\Ton\Transports\Toncenter\ToncenterTransport;
 use Olifanton\Ton\Transports\Toncenter\ToncenterV2Client;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class TonBootstrapper extends ModuleBootstrapper
 {
@@ -35,6 +38,14 @@ class TonBootstrapper extends ModuleBootstrapper
                 return new ToncenterTransport(
                     $container->get(ToncenterV2Client::class),
                 );
+            },
+
+            DnsClient::class => static function (Container $container) {
+                $client = new DnsClient($container->get(Transport::class));
+                $client->setCache($container->get(CacheInterface::class));
+                $client->setLogger($container->get(LoggerInterface::class));
+
+                return $client;
             },
         ]);
 

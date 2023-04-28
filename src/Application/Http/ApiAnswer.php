@@ -2,7 +2,4 @@
 
 namespace Olifanton\DemoWallet\Application\Http;
 
-interface ApiAnswer extends \JsonSerializable
-{
-
-}
+interface ApiAnswer extends \JsonSerializable {}

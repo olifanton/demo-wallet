@@ -15,9 +15,9 @@ readonly class Http
         private UseCases\SaveWallet\SaveWalletHandler $saveWalletHandler,
         private UseCases\WalletState\WalletStateHandler $walletStateHandler,
         private UseCases\WalletsList\WalletsListHandler $walletsListHandler,
-    )
-    {
-    }
+        private UseCases\UpdateWallet\UpdateWalletHandler $updateWalletHandler,
+        private UseCases\SendTransaction\SendTransactionHandler $sendTransactionHandler,
+    ) {}
 
     /**
      * @throws \Throwable
@@ -71,14 +71,48 @@ readonly class Http
      */
     #[Route("/wallets")]
     public function getList(ServerRequestInterface $request,
-                             ResponseInterface $response,
-                             array $args,
+                            ResponseInterface $response,
+                            array $args,
 
     ): ResponseInterface
     {
         return HttpHelper::json(
             $this->walletsListHandler->handle(
                 new UseCases\WalletsList\WalletsListCommand(),
+            ),
+        );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Route("/wallet/{walletId}", ["PATCH"])]
+    public function updateWallet(ServerRequestInterface $request,
+                                 ResponseInterface $response,
+                                 array $args,
+
+    ): ResponseInterface
+    {
+        return HttpHelper::json(
+            $this->updateWalletHandler->handle(
+                UseCases\UpdateWallet\UpdateWalletCommand::fromRequest($request, $args["walletId"] ?? null),
+            ),
+        );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Route("/wallet/{walletId}/transaction", ["POST"])]
+    public function sendTransaction(ServerRequestInterface $request,
+                                    ResponseInterface $response,
+                                    array $args,
+
+    ): ResponseInterface
+    {
+        return HttpHelper::json(
+            $this->sendTransactionHandler->handle(
+                UseCases\SendTransaction\SendTransactionCommand::fromRequest($request, $args["walletId"] ?? null),
             ),
         );
     }

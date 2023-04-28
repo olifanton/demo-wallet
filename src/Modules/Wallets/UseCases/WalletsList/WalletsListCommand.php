@@ -2,7 +2,4 @@
 
 namespace Olifanton\DemoWallet\Modules\Wallets\UseCases\WalletsList;
 
-class WalletsListCommand
-{
-
-}
+class WalletsListCommand {}

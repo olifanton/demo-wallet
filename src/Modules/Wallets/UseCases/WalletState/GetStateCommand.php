@@ -6,9 +6,7 @@ readonly class GetStateCommand
 {
     public function __construct(
         private ?string $walletId,
-    )
-    {
-    }
+    ) {}
 
     public function getWalletId(): ?string
     {

@@ -8,9 +8,7 @@ readonly class ApplicationState implements ApiAnswer
 {
     public function __construct(
         public bool $isApplicationInitialized,
-    )
-    {
-    }
+    ) {}
 
     public function jsonSerialize(): array
     {

@@ -10,11 +10,6 @@ class KeyPairDeserializer implements CustomDeserializer
 {
     public static function deserialize(string $data): KeyPair
     {
-        $publicKey = substr($data, 64);
-
-        return new KeyPair(
-            Bytes::hexStringToBytes($publicKey),
-            Bytes::hexStringToBytes($data),
-        );
+        return KeyPair::fromSecretKey(Bytes::hexStringToBytes($data));
     }
 }

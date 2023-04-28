@@ -13,7 +13,5 @@ readonly class Route
     public function __construct(
         public string $pattern,
         public array  $method = ["GET"],
-    )
-    {
-    }
+    ) {}
 }

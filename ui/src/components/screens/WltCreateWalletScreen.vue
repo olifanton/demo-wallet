@@ -117,6 +117,7 @@ import WltPage from "@/components/layout/WltPage.vue";
 import WltScreenTitle from "@/components/ui/WltScreenTitle.vue";
 import {Stage, StageStatus, useWalletCreatorStore} from "@/stores/wallet-creator-store";
 import {useNotificationStore} from "@/stores/notification-store";
+import {copyToClipboard} from "@/helpers";
 
 export default defineComponent({
     name: "wlt-create-wallet-screen",
@@ -160,9 +161,7 @@ export default defineComponent({
                 });
         },
         copyWords() {
-            navigator
-                .clipboard
-                .writeText(this.words.join(' '))
+            copyToClipboard(this.words.join(' '))
                 .then(() => {
                     useNotificationStore().showText('Success', 'Words copied to clipboard');
                 });

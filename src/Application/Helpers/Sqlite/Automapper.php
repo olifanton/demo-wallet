@@ -24,9 +24,7 @@ class Automapper
      */
     public function __construct(
         private readonly string $modelClass,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @param array $row

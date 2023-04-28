@@ -2,7 +2,4 @@
 
 namespace Olifanton\DemoWallet\Modules\Wallets\UseCases\GenerateWords;
 
-class GenerateWordsCommand
-{
-
-}
+class GenerateWordsCommand {}

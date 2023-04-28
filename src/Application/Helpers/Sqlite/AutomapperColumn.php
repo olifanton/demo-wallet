@@ -20,7 +20,5 @@ class AutomapperColumn
         public readonly string $columnName,
         public readonly string $propertyMapper = self::STRING,
         public readonly mixed $propertyMapperArg = null,
-    )
-    {
-    }
+    ) {}
 }

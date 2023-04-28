@@ -2,15 +2,17 @@ import {inject, injectable} from "tsyringe";
 import BigNumber from "bignumber.js";
 import {Api, ApiResponse, HttpMethod} from "@/services/api";
 
+export interface Sum {
+    nano: BigNumber,
+    wei: number,
+    usd: number|null,
+}
+
 export interface WalletState {
     id: string,
     name: string,
     address: string,
-    balance: {
-        nano: BigNumber,
-        wei: number,
-        usd: number|null,
-    },
+    balance: Sum,
 }
 
 export interface ShortWalletData {
@@ -67,7 +69,19 @@ export class Wallets {
                     });
                 }
 
-                return Promise.reject(new Error(response.message ?? "Wallets list loading error"));
+                return Promise.reject(new Error(response.message ?? "Wallet list loading error"));
             });
+    }
+
+    public updateWallet(walletId: string, params: { name?: string }): Promise<any> {
+        return this
+            .api
+            .fetch<ApiResponse>(
+                `wallet/${walletId}`,
+                {
+                    method: HttpMethod.PATCH,
+                    data: params,
+                },
+            );
     }
 }

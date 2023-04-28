@@ -1,31 +1,31 @@
 <?php declare(strict_types=1);
 
-namespace Olifanton\DemoWallet\Modules\Wallets\UseCases\SaveWallet;
+namespace Olifanton\DemoWallet\Modules\Wallets\UseCases\UpdateWallet;
 
 use Olifanton\DemoWallet\Application\Exceptions\InvalidParamsException;
 use Olifanton\DemoWallet\Application\Helpers\Validation;
-use Olifanton\Mnemonic\Wordlist\Bip39English;
 use Psr\Http\Message\ServerRequestInterface;
 use Valitron\Validator;
 
-readonly class SaveWalletCommand
+readonly class UpdateWalletCommand
 {
-    /**
-     * @param string[] $words
-     */
     public function __construct(
-        private array $words,
+        public string $walletId,
+        public array $params,
     ) {}
 
     /**
      * @throws InvalidParamsException
      */
-    public static function fromRequest(ServerRequestInterface $request): self
+    public static function fromRequest(ServerRequestInterface $request, ?string $walletId): self
     {
+        if (!$walletId) {
+            throw new InvalidParamsException("Wallet identifier is required");
+        }
+
         $params = $request->getParsedBody();
         $v = new Validator($params);
-        $v->rule("required", "words");
-        $v->rule("subset", "words", Bip39English::WORDS);
+        $v->rule("lengthMin", "name", 1);
 
         if (!$v->validate()) {
             throw new InvalidParamsException(
@@ -34,15 +34,8 @@ readonly class SaveWalletCommand
         }
 
         return new self(
-            $params["words"],
+            $walletId,
+            $params,
         );
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getWords(): array
-    {
-        return $this->words;
     }
 }

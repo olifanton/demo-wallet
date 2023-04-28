@@ -11,7 +11,7 @@ export enum HttpMethod {
 export interface ApiResponse {
     isSuccess: boolean,
     message: string | null,
-    data?: {},
+    data?: any,
 }
 
 export interface FetchOptions {

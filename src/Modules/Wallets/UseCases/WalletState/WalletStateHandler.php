@@ -26,9 +26,7 @@ readonly class WalletStateHandler
         private ToncenterV2Client     $toncenterV2Client,
         private TonPriceFetcher       $priceFetcher,
         private LoggerInterface       $logger,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws EntityNotFoundException

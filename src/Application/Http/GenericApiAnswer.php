@@ -8,9 +8,7 @@ readonly class GenericApiAnswer implements ApiAnswer
         private bool $isSuccess,
         private ?string $message = null,
         private ?array $data = null,
-    )
-    {
-    }
+    ) {}
 
     public static function success(?array $data = null, ?string $message = "Successful action"): self
     {

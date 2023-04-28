@@ -6,11 +6,12 @@ use DI\ContainerBuilder;
 use Olifanton\DemoWallet\Application\Modules\ModulesConfigurator;
 
 $configs = [
+    "cache",
+    "http-client",
     "monolog",
     "swoole",
     "sqlite",
-    "http-client",
-    "cache",
+    "valitron",
 ];
 
 return static function (ContainerBuilder $builder) use ($configs) {

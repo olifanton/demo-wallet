@@ -17,9 +17,7 @@ readonly class SaveWalletHandler
     public function __construct(
         private SecretKeyStorage $keyStorage,
         private WalletsStorage $walletsStorage,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws TonMnemonicException

@@ -9,9 +9,7 @@ readonly class GetStateHandler
 {
     public function __construct(
         private WalletsStorage $walletsStorage,
-    )
-    {
-    }
+    ) {}
 
     public function handle(GetStateCommand $command): ApplicationState
     {

@@ -2,6 +2,4 @@
 
 namespace Olifanton\DemoWallet\Application\Exceptions;
 
-class InvalidParamsException extends \Exception
-{
-}
+class InvalidParamsException extends \Exception {}

@@ -8,10 +8,7 @@ use Olifanton\DemoWallet\Modules\Wallets\WalletsBootstrapper;
 
 class ApplicationStateBootstrapper extends ModuleBootstrapper
 {
-    public static function boot(ContainerBuilder $builder): void
-    {
-
-    }
+    public static function boot(ContainerBuilder $builder): void {}
 
     public static function requires(): array
     {

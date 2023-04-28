@@ -3,16 +3,21 @@
         <div :class="bem('inner')">
             <div :class="bem('row')">
                 <div :class="bem('row-title')">Address</div>
-                <div :class="bem('row-value', {'loading': !wallet, 'address': true})">
-                    <span v-if="wallet">
+                <div :class="bem('row-value', {'loading': !wallet || isLoading, 'address': true})">
+                    <span v-if="wallet && !isLoading">
                         {{ wallet?.address }}
+                        <vs-icon
+                            icon="content_copy"
+                            @click="copyAddress"
+                            :class="bem('fast-icon')"
+                            title="Copy address"
+                        ></vs-icon>
                         <a
                             :href="`https://testnet.tonscan.org/address/${wallet?.address}`"
-                            :class="bem('fast-icon')"
                             target="_blank"
                             title="Tonscan"
                         >
-                            <vs-icon icon="explore"></vs-icon>
+                            <vs-icon icon="explore" :class="bem('fast-icon')"></vs-icon>
                         </a>
                     </span>
                 </div>
@@ -20,17 +25,36 @@
 
             <div :class="bem('row')">
                 <div :class="bem('row-title', 'name')">Name</div>
-                <div :class="bem('row-value', {'loading': !wallet, 'name': true})">{{ wallet?.name }}</div>
+                <div :class="bem('row-value', {'loading': !wallet || isLoading, 'name': true})">
+                    <span v-if="!isLoading">
+                        <span v-if="!isNameEditMode">
+                            {{ wallet?.name }}
+                        </span>
+                        <div v-if="isNameEditMode">
+                            <vs-input
+                                v-model="wallet.name"
+                                @keyup.enter="saveNewWalletName"
+                            />
+                        </div>
+                        <vs-icon
+                            v-if="!isNameEditMode"
+                            icon="edit"
+                            @click="isNameEditMode = true"
+                            :class="bem('fast-icon')"
+                            title="Edit name"
+                        ></vs-icon>
+                    </span>
+                </div>
             </div>
 
             <div :class="bem('row')">
                 <div :class="bem('row-title')">Balance</div>
-                <div :class="bem('row-value', {'loading': !wallet, 'balance-ton': true})">
-                    <span v-if="wallet">{{ wallet?.balance?.wei }} TON</span>
+                <div :class="bem('row-value', {'loading': !wallet || isLoading, 'balance-ton': true})">
+                    <span v-if="wallet && !isLoading">{{ wallet?.balance?.wei }} TON</span>
                 </div>
             </div>
 
-            <div :class="bem('row')" v-if="wallet?.balance?.usd">
+            <div :class="bem('row')" v-if="wallet?.balance?.usd && !isLoading">
                 <div :class="bem('row-value', 'balance-usd')">${{ wallet?.balance?.usd }}</div>
                 <div :class="bem('coingecko-label')">Via CoinGecko</div>
             </div>
@@ -104,6 +128,10 @@
                     }
                 }
             }
+
+            input {
+                color: rgb(var(--text-color));
+            }
         }
     }
 
@@ -115,10 +143,12 @@
         color: #ffffff;
         text-decoration: none;
         display: inline-block;
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 19px;
         background-size: contain;
         vertical-align: text-bottom;
+        cursor: pointer;
+        font-size: 16px;
     }
 }
 </style>
@@ -126,6 +156,9 @@
 <script lang="ts">
 import {defineComponent, PropType} from "vue";
 import type {WalletState} from "@/services/wallets";
+import {copyToClipboard} from "@/helpers";
+import {useNotificationStore} from "@/stores/notification-store";
+import {useWalletsStore} from "@/stores/wallets-store";
 
 export default defineComponent({
     name: "wlt-workspace-screen-active-wallet",
@@ -134,6 +167,30 @@ export default defineComponent({
             type: Object as PropType<WalletState>,
             required: false,
             default: null,
+        },
+        isLoading: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    data() {
+        return {
+            isNameEditMode: false,
+        };
+    },
+    methods: {
+        async copyAddress() {
+            if (this.wallet) {
+                await copyToClipboard(this.wallet.address);
+                useNotificationStore().showText('Success', 'Address copied to clipboard');
+            }
+        },
+        saveNewWalletName() {
+            if (this.wallet) {
+                useWalletsStore().setNewName(this.wallet.id, this.wallet.name);
+            }
+
+            this.isNameEditMode = false;
         },
     },
 });

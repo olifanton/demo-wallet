@@ -17,9 +17,7 @@ readonly class WalletsListHandler
         private WalletsStorage $walletsStorage,
         private SecretKeyStorage $secretKeyStorage,
         private WalletContractFactory $walletContractFactory,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws \Throwable
